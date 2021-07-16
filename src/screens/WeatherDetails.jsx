@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
+
 const WeatherDetails = () => {
         return (
                 <View style={styles.centerAlign}>

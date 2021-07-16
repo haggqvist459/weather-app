@@ -1,10 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
+import { ROUTES } from '../utils/constants'
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
         return (
                 <View style={styles.centerAlign}>
                         <Text>Sign Up</Text>
+                        <Button onPress={() => navigation.navigate(ROUTES.HOME)} title='Home'/>
                 </View>
         )
 }
