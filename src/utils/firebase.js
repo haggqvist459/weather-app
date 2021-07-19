@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 require('firebase/auth')
 
+
 var firebaseConfig = {
         apiKey: "AIzaSyB3-suDYoRfQ669HS3-7NjuF-Dl8sdW8gQ",
         authDomain: "weather-app-57730.firebaseapp.com",

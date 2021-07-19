@@ -1,41 +1,36 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Home, Profile, SignIn, SignUp, WeatherDetails } from './src/screens';
-import { ROUTES } from './src/utils/constants';
+import 'react-native-gesture-handler'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { UserProvider } from './src/contexts/UserContext'
+import AppStackScreens from './src/stacks/AppStackScreens'
 
-const Stack = createStackNavigator();
+export default App = () => {
 
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={ROUTES.SIGN_IN} >
-        <Stack.Screen name={ROUTES.HOME} component={Home} />
-        <Stack.Screen name={ROUTES.PROFILE} component={Profile} />
-        <Stack.Screen name={ROUTES.SIGN_IN} component={SignIn} />
-        <Stack.Screen name={ROUTES.SIGN_UP} component={SignUp} />
-        <Stack.Screen name={ROUTES.WEATHER_DETAILS} component={WeatherDetails} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+        return (
+                <UserProvider>
+                        <NavigationContainer>
+                                <AppStackScreens />
+                        </NavigationContainer>
+                </UserProvider>
+        )
 }
-
 
 
 /*
 
 TODO :
 
-* Add Auth flow (some sort of secure storage for the current user)
 * Sign in screen - UI & logic
 * Sign up screen - UI & logic
+
 * Profile link in header bar - UI & logic
+* Profile screen UI & logic
 
 * Add weather API
 * Home screen - UI & logic
 * Weather details - UI & logic
+
+* Customize splash screen
 
 Extras:
 * global styles
@@ -46,25 +41,8 @@ COMPLETED:
 * Basic Navigation around the screens
 * Firebase project setup
 * Add Firebase to the app
+* Add Auth flow (useContext)
+* basic splash/loading screen
 
 */
 
-
-
-/*
-
-const isSignedIn = true;
-
-{isSignedIn ?
-          <>
-            <Stack.Screen name={ROUTES.HOME} component={Home} />
-            <Stack.Screen name={ROUTES.WEATHER_DETAILS} component={WeatherDetails} />
-            <Stack.Screen name={ROUTES.PROFILE} component={Profile} />
-          </>
-          :
-          <>
-            <Stack.Screen name={ROUTES.SIGN_IN} component={SignIn} />
-            <Stack.Screen name={ROUTES.SIGN_UP} component={SignUp} />
-          </>}
-
-*/

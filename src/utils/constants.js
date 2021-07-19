@@ -5,3 +5,5 @@ export const ROUTES = {
         SIGN_UP: 'Sign Up',
         WEATHER_DETAILS: 'Weather Details'
 }
+
+export const ASYNC_USER_UID = 'ASYNC_USER_UID';

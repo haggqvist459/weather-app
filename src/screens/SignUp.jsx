@@ -6,7 +6,7 @@ const SignUp = ({navigation}) => {
         return (
                 <View style={styles.centerAlign}>
                         <Text>Sign Up</Text>
-                        <Button onPress={() => navigation.navigate(ROUTES.HOME)} title='Home'/>
+                        <Button onPress={() => navigation.navigate(ROUTES.SIGN_IN)} title='Sign In'/>
                 </View>
         )
 }
