@@ -20,11 +20,11 @@ export const authStyles = StyleSheet.create({
                 borderWidth: 1,
         },
         viewHeader: {
-                fontSize: 16,
+                fontSize: 12,
                 // marginLeft: '7.5%',
         },
         textInput: {
-                fontSize: 22,
+                fontSize: 14,
                 width: '100%',
                 marginTop: 15,
                 paddingBottom: 10,

@@ -1,18 +1,33 @@
 import React, { useEffect, useContext } from 'react'
 import { StyleSheet, Text, View, ActivityIndicator, } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
+import { FirebaseContext } from '../contexts/FirebaseContext'
 
 
 const Splash = () => {
 
         const [_, setUser] = useContext(UserContext);
+        const firebase = useContext(FirebaseContext);
 
         useEffect( ()=> {
                 // here we can check for a firebase user during app loading
                 // for now though, lets set it to wait one second and then set the user to false so that we always get to the login screen
                 setTimeout(async () => {
-                        setUser((state) => ({ ...state, isLoggedIn: false}));
-                }, 1000);
+
+                        const user = firebase.getCurrentUser();
+
+                        if (user) {
+                                const userInfo = await firebase.getUserInfo(user.uid)
+                                setUser({
+                                        isLoggedIn: true,
+                                        email: userInfo.email,
+                                        uid: user.uid,
+                                        username: userInfo.username,
+                                })
+                        } else {
+                                setUser((state) => ({ ...state, isLoggedIn: false}));
+                        }
+                }, 500);
                  
         }, [])
 

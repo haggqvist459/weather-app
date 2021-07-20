@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
 import { ROUTES, } from '../utils/constants'
-import firebase from '../utils/firebase'
 import { MaterialIcons } from '@expo/vector-icons';
 import { authStyles } from '../styles/authStyles'
 
