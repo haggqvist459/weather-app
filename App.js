@@ -20,8 +20,9 @@ export default App = () => {
 
 TODO :
 
-* Sign in screen - UI & logic
-* Sign up screen - UI & logic
+* Firebase Context
+* Sign in screen - logic
+* Sign up screen - logic
 
 * Profile link in header bar - UI & logic
 * Profile screen UI & logic
@@ -43,6 +44,7 @@ COMPLETED:
 * Add Firebase to the app
 * Add Auth flow (useContext)
 * basic splash/loading screen
-
+* Sign In UI
+* Sign Up UI
 */
 
