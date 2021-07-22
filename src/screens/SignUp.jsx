@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext }from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
 import { FirebaseContext } from '../contexts/FirebaseContext'
@@ -8,37 +8,64 @@ import { authStyles } from '../styles/authStyles';
 
 const SignUp = ({ navigation }) => {
 
-        const [username, setUsername] = useState('');
-        const [email, setEmail] = useState('');
-        const [password, setPassword] = useState('');
-        const [passwordConfirm, setPasswordConfirm] = useState('');
+        const [username, setUsername] = useState();
+        const [email, setEmail] = useState();
+        const [password, setPassword] = useState();
+        const [passwordConfirm, setPasswordConfirm] = useState();
         const [passwordHidden, setPasswordHidden] = useState(true);
+        const [loading, setLoading] = useState(false);
 
         const firebase = useContext(FirebaseContext);
         const [_, setUser] = useContext(UserContext);
 
-        const signUp = async () => {
+        const handleSignUp = async () => {
+
+                setLoading(true);
+                // still need password & email format checks
+                // also check there's a nonempty on username
+
+
+
                 const user = {
                         username,
-                        email, 
+                        email,
                         password,
                 }
 
                 try {
-
-                        // still need password & email format checks
-
                         const createdUser = await firebase.createUser(user);
-
                         // do a check on the result of createdUser before updating this
-                        setUser({...createdUser, isLoggedIn: true});
+                        setUser({ ...createdUser, isLoggedIn: true });
 
                 } catch (error) {
                         console.log('Error @signUp: ', error.message);
+                } finally {
+                        setLoading(false);
                 }
 
         }
 
+        const validatePassword = () => {
+                // password validation
+                if (password.length < 6) {
+                        console.log("password not long enough");
+                } else {
+                        if (password === passwordConfirm) {
+                                //approve the password, password validation completed 
+                        } else {
+                                //password does not match
+                                // throw an error 
+                        }
+                }
+        }
+
+        const validateEmail = () => {
+                // if (email.indexOf('@') > -1) {
+                //         alert("email badly formatted");
+                // }
+                // var emailexample = 'test_com@test.net'
+                
+        }
 
         return (
                 <View style={authStyles.centerAlign}>
@@ -48,7 +75,7 @@ const SignUp = ({ navigation }) => {
                                 <TextInput
                                         style={authStyles.textInput}
                                         value={username}
-                                        onChangeText={(username) => setUsername(username.trim())}
+                                        onChangeText={(username) => setUsername(username)}
                                         placeholder={'JohnSmith'}
                                 />
                         </View>
@@ -63,7 +90,7 @@ const SignUp = ({ navigation }) => {
                         </View>
                         <View style={authStyles.passwordView}>
                                 <Text style={authStyles.viewHeader}>Password: </Text>
-                                 <View style={authStyles.passwordRow}>
+                                <View style={authStyles.passwordRow}>
                                         <TextInput
                                                 style={authStyles.textInput}
                                                 value={password}
@@ -92,8 +119,10 @@ const SignUp = ({ navigation }) => {
                                 </View>
                         </View>
                         <View style={authStyles.signInView} >
-                                <TouchableOpacity onPress={signUp} style={authStyles.signInButton}>
-                                        <Text style={authStyles.signInText}>{'Sign Up'}</Text>
+                                <TouchableOpacity onPress={handleSignUp} style={authStyles.signInButton}>
+                                        {loading ?
+                                                <ActivityIndicator size={'small'} color="#0000ff" /> :
+                                                <Text style={authStyles.signInText}>{'Sign Up'}</Text>}
                                 </TouchableOpacity>
                         </View>
                         <View style={authStyles.signUpView}>

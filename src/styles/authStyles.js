@@ -51,6 +51,7 @@ export const authStyles = StyleSheet.create({
                 marginTop: 10,
                 borderRadius: 10,
         },
+        // button start
         signInButton: {
                 width: '100%',
                 padding: 10,
@@ -59,7 +60,8 @@ export const authStyles = StyleSheet.create({
                 fontSize: 22,
                 alignSelf: 'center'
         },
-        //sign up text row
+        //button end
+        //text row start
         signUpView: {
                 flexDirection: 'row',
                 marginTop: 10,
@@ -69,4 +71,5 @@ export const authStyles = StyleSheet.create({
                 textDecorationLine: 'underline',
                 paddingHorizontal: 5,
         }
+        //text row end 
 })

@@ -1,33 +1,56 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
+import { FirebaseContext } from '../contexts/FirebaseContext'
 import { ROUTES, } from '../utils/constants'
 import { MaterialIcons } from '@expo/vector-icons';
 import { authStyles } from '../styles/authStyles'
 
 const SignIn = ({ navigation }) => {
 
+        // contexts 
         const [user, setUser] = useContext(UserContext);
+        const firebase = useContext(FirebaseContext);
 
+        // states
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
-
         const [passwordHidden, setPasswordHidden] = useState(true);
+        const [loading, setLoading] = useState(false);
 
         useEffect(() => {
-                console.log("signin component user uid", user.uid);
-        }, [user.uid])
+                console.log('useEffect SignIn Screen');
+        }, [])
 
-        const handleSignIn = () => {
+
+        const handleSignIn = async () => {
+                setLoading(true);
                 try {
-                        firebase.auth().signInWithEmailAndPassword(email, password).then(
-                                //update the user context
-                        )
+                        await firebase.signIn(email, password);
+                        const uid = firebase.getCurrentUser().uid;
+                        console.log('handleSignIn uid: ', uid);
+                        const userInfo = await firebase.getUserInfo(uid);
+                        setUser({
+                                username: userInfo.username,
+                                email: userInfo.email,
+                                uid,
+                                isLoggedIn: true
+                        })
                 } catch (error) {
                         console.log("error @signin, ", error.message);
+                        createAlert(error.message);
+                } finally {
+                        setLoading(false);
                 }
         }
 
+        const createAlert = (error) => {
+                Alert.alert(
+                        error,
+                        " ",
+                        [{ text: "OK" }],
+                )
+        }
 
         return (
                 <View style={authStyles.centerAlign}>
@@ -54,14 +77,16 @@ const SignIn = ({ navigation }) => {
                                                 secureTextEntry={passwordHidden}
                                         />
                                         <TouchableOpacity style={authStyles.passwordIcon} onPress={() => setPasswordHidden(!passwordHidden)}>
-                                                <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={24} color="black" />     
+                                                <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={24} color="black" />
                                         </TouchableOpacity>
                                 </View>
                         </View>
 
                         <View style={authStyles.signInView} >
-                                <TouchableOpacity style={authStyles.signInButton}>
-                                        <Text style={authStyles.signInText}>{'Sign In'}</Text>
+                                <TouchableOpacity onPress={handleSignIn} style={authStyles.signInButton}>
+                                        {loading ?
+                                                <ActivityIndicator size={'small'} color="#0000ff" /> :
+                                                <Text style={authStyles.signInText}>{'Sign In'}</Text>}
                                 </TouchableOpacity>
                         </View>
 

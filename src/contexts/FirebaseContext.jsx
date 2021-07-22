@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -43,6 +43,7 @@ const Firebase = {
 
                 } catch (error) {
                         console.log('Error @createUser ', error.message);
+                        console.log('Error @createUser ', error.code);
                 }
         },
         getUserInfo:  async (uid) => {
@@ -56,6 +57,20 @@ const Firebase = {
                 } catch (error) {
                         console.log('Error @getUserInfo: ', error.message);
                 }
+        },
+        signOut: async () => {
+                try {
+                        await firebase.auth().signOut();
+                        return true;
+                }      
+                catch (error) {
+                        console.log("Error @Firebase signOut: ", error.message);
+                }
+
+                return false;
+        },
+        signIn: async (email, password) => {
+                return firebase.auth().signInWithEmailAndPassword(email, password);
         }
 
 }
@@ -71,4 +86,27 @@ export { FirebaseContext, FirebaseProvider };
 /* 
 maybe require('firebase/auth)
 maybe require('firebase/firestore)
+
+
+alternative way to get current user 
+// firebase.auth().onAuthStateChanged(function(user){
+                //         if (user){
+                //                 console.log('getCurrentUser UID: ', user.uid);
+                //                 return user.uid;
+                //                 } else {
+                //                         return null;
+                //                 }
+                //         }
+                // )
+
+
+
+alternative sign in
+                // try {
+                //         await firebase.auth().signInWithEmailAndPassword(email, password);
+                //         return true;
+                // } catch (error) {
+                //         console.log("Error @Firebase signIn: ", error.message);
+                // }
+                // return false;
 */

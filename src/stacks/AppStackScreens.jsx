@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import AuthStackScreens from './AuthStackScreens';
 import MainStackScreens from './MainStackScreens';
 import { UserContext } from '../contexts/UserContext';
+import { FirebaseContext } from '../contexts/FirebaseContext';
 import { Splash } from '../screens';
 
 export default AppStackScreens = () => {
@@ -10,12 +11,12 @@ export default AppStackScreens = () => {
 
         const AppStack = createStackNavigator();
         const [user] = useContext(UserContext);
+        const firebase = useContext(FirebaseContext);
 
         useEffect(() => {
-                // just a double check that there's a user for troubleshooting
-                console.log("user uid", user.uid)
-        }, []);
-
+                 const uid =  firebase.getCurrentUser();
+                console.log("AppStackScreens getCurrentUser result: ", uid)
+        }, [])
         return (
                 <AppStack.Navigator headerMode="none">
                         {user.isLoggedIn === null ?
