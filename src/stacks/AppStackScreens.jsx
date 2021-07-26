@@ -10,16 +10,18 @@ export default AppStackScreens = () => {
 
 
         const AppStack = createStackNavigator();
-        const [user] = useContext(UserContext);
+        const [user, setUser] = useContext(UserContext);
         const firebase = useContext(FirebaseContext);
 
-        useEffect(() => {
-                 const uid =  firebase.getCurrentUser();
-                console.log("AppStackScreens getCurrentUser result: ", uid)
-        }, [])
+        // useEffect(() => {
+        //         //  const uid =  firebase.getCurrentUser();
+        //         // console.log("AppStackScreens getCurrentUser result: ", uid)
+        // }, [])
+
         return (
                 <AppStack.Navigator headerMode="none">
-                        {user.isLoggedIn === null ?
+                        {
+                        user.isLoggedIn === null ?
                                 <AppStack.Screen name={"Splash"} component={Splash} />
                                 :
                                 user.isLoggedIn ?
@@ -30,3 +32,16 @@ export default AppStackScreens = () => {
                 </AppStack.Navigator>
         )
 }
+
+/* 
+
+  {user.isLoggedIn === null ?
+                                <AppStack.Screen name={"Splash"} component={Splash} />
+                                :
+                                user.isLoggedIn ?
+                                        <AppStack.Screen name="Main" component={MainStackScreens} />
+                                        :
+                                        <AppStack.Screen name="Auth" component={AuthStackScreens} />
+                        }
+
+*/

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
 import { FirebaseContext } from '../contexts/FirebaseContext'
@@ -23,8 +23,6 @@ const SignUp = ({ navigation }) => {
                 setLoading(true);
                 // still need password & email format checks
                 // also check there's a nonempty on username
-
-
 
                 const user = {
                         username,
@@ -63,12 +61,12 @@ const SignUp = ({ navigation }) => {
                 // if (email.indexOf('@') > -1) {
                 //         alert("email badly formatted");
                 // }
-                // var emailexample = 'test_com@test.net'
-                
+                // var emailexample = 'test_com@test.net'       
         }
 
         return (
                 <View style={authStyles.centerAlign}>
+                        <StatusBar barStyle="dark-content"/>
                         <Text>Sign Up</Text>
                         <View style={authStyles.emailView}>
                                 <Text style={authStyles.viewHeader}>User name: </Text>

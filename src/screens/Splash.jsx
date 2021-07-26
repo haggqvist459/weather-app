@@ -13,9 +13,10 @@ const Splash = () => {
                 // here we can check for a firebase user during app loading
                 // for now though, lets set it to wait one second and then set the user to false so that we always get to the login screen
                 console.log("useEffect Splash");
-                setTimeout(async () => {
+
+                setTimeout(async() => {
                         const user = firebase.getCurrentUser();
-                        console.log("Splash screen firebase.getCurrentUser result: ", user);
+                        console.log("Splash screen firebase.getCurrentUser result: ", user.uid);
                         if (user) {
                                 const userInfo = await firebase.getUserInfo(user.uid)
                                 setUser({
@@ -23,14 +24,16 @@ const Splash = () => {
                                         email: userInfo.email,
                                         uid: user.uid,
                                         username: userInfo.username,
+                                        // isLoading: false
                                 })
                                 console.log("splash screen user info: ", userInfo);
                         } else {
-                                setUser((state) => ({ ...state, isLoggedIn: false }));
+                                setUser((state) => ({ ...state, isLoggedIn: false}));
                         }
-                }, 500);
+                }, 300);
+        }, []);
 
-        }, [])
+
 
         return (
                 <View style={styles.centerAlign}>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator, StatusBar } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
 import { FirebaseContext } from '../contexts/FirebaseContext'
 import { ROUTES, } from '../utils/constants'
@@ -34,7 +34,8 @@ const SignIn = ({ navigation }) => {
                                 username: userInfo.username,
                                 email: userInfo.email,
                                 uid,
-                                isLoggedIn: true
+                                isLoggedIn: true,
+                                isLoading: false,
                         })
                 } catch (error) {
                         console.log("error @signin, ", error.message);
@@ -54,15 +55,16 @@ const SignIn = ({ navigation }) => {
 
         return (
                 <View style={authStyles.centerAlign}>
+                        <StatusBar barStyle="dark-content"/>
                         <Text>Sign In</Text>
 
                         <View style={authStyles.emailView}>
                                 <Text style={authStyles.viewHeader}>Email: </Text>
                                 <TextInput
                                         style={authStyles.textInput}
+                                        placeholder={'email@example.com'}
                                         value={email}
                                         onChangeText={(email) => setEmail(email.trim())}
-                                        placeholder={'email@example.com'}
                                 />
                         </View>
 

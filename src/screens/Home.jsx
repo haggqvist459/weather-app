@@ -1,26 +1,18 @@
 import React, { useContext, useLayoutEffect } from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
-import { MaterialIcons } from '@expo/vector-icons';
+import HeaderButton from '../components/HeaderButton';
 
 
 const Home = ({ navigation }) => {
 
         const [user] = useContext(UserContext);
 
-        const handleHeaderPress = () => {
-                console.log("header button pressed");
-                navigation.navigate(ROUTES.PROFILE);
-        } 
 
         useLayoutEffect(() => {
                 navigation.setOptions({
-                        headerRight: () => (
-                                <TouchableOpacity style={styles.headerButton} onPress={handleHeaderPress}>
-                                        <MaterialIcons name="account-circle" size={32} color="black" />
-                                </TouchableOpacity>
-                        ),
+                        headerRight: () => (<HeaderButton navigation={navigation}/>),
                 })
         }, [navigation])
 

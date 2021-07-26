@@ -7,3 +7,5 @@ export const ROUTES = {
 }
 
 export const ASYNC_USER_UID = 'ASYNC_USER_UID';
+
+export const DB_USER_COLLECTION_NAME = 'users';
