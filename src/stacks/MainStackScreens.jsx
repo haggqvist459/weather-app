@@ -4,14 +4,12 @@ import { Home, Profile, WeatherDetails } from '../screens'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
 
-export default MainStackScreens = () => {
-
+const MainStackScreens = () => {
 
         const MainStack = createStackNavigator();
 
         //access the user in the user context to get the username 
         const [user] = useContext(UserContext)
-
 
         return (
                 <MainStack.Navigator>
@@ -25,6 +23,7 @@ export default MainStackScreens = () => {
         )
 }
 
+export default MainStackScreens;
 /*
 
 for web linking

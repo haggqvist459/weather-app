@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
+import AppStackScreens from './src/stacks/AppStackScreens'
 import { UserProvider } from './src/contexts/UserContext'
 import { FirebaseProvider } from './src/contexts/FirebaseContext'
-import AppStackScreens from './src/stacks/AppStackScreens'
 
-export default App = () => {
+
+const App = () => {
 
         return (
                 <FirebaseProvider>
@@ -18,13 +19,24 @@ export default App = () => {
         )
 }
 
+export default App;
+
+
 
 /*
 
 NEXT TO DO: 
 
+*** Home screen - UI & logic
+        ** UI for the current location 
+        ** Search/add city to list
+        ** Flatlist with cities, current location as first choice
+                * just the city names & delete button next to it
+                * each item in list links to the weather details screen with the data for that city
+
 *** Add weather API
-        * 
+
+        
 
 IN PROGRESS:
 

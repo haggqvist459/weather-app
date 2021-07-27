@@ -11,10 +11,8 @@ const UserProvider = (props) => {
                 isLoggedIn: null,
         })
         
-        
-
-
         return <UserContext.Provider value={[state, setState]}>{props.children}</UserContext.Provider>
+        
 }
 
 export { UserContext, UserProvider }

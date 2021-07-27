@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator, StatusBar } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
 import { FirebaseContext } from '../contexts/FirebaseContext'
@@ -18,32 +18,13 @@ const SignIn = ({ navigation }) => {
         const [passwordHidden, setPasswordHidden] = useState(true);
         const [loading, setLoading] = useState(false);
 
-        useEffect(() => {
-                console.log('SignIn useEffect');
-                console.log('SignIn UserContext: ', user);
-                const user = firebase.getCurrentUser();
-                console.log('SignIn Firebase Context UID: ', user);
-        }, [])
+        // useEffect(() => {
+        //         console.log('SignIn useEffect');
+        //         console.log('SignIn UserContext: ', user);
+        //         const user = firebase.getCurrentUser();
+        //         console.log('SignIn Firebase Context UID: ', user);
+        // }, [])
 
-        useLayoutEffect(() => {
-                console.log("SignIn useLayoutEffect")
-                setTimeout(async () => {
-                        const user = firebase.getCurrentUser();
-                        if (user) {
-                                console.log("SignIn useLayoutEffect firebase.getCurrentUser result: ", user.uid);
-                                const userInfo = await firebase.getUserInfo(user.uid)
-                                setUser({
-                                        isLoggedIn: true,
-                                        email: userInfo.email,
-                                        uid: user.uid,
-                                        username: userInfo.username,
-                                });
-                                console.log("SignIn user info: ", userInfo);
-                        } else {
-                                setUser((state) => ({ ...state, isLoggedIn: false}));
-                        }
-                }, 300);
-        }, []);
 
         const handleSignIn = async () => {
                 setLoading(true);

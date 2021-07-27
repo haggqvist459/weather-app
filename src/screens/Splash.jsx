@@ -6,55 +6,31 @@ import { FirebaseContext } from '../contexts/FirebaseContext'
 
 const Splash = () => {
 
-        const [user, setUser] = useContext(UserContext);
+        const [_, setUser] = useContext(UserContext);
         const firebase = useContext(FirebaseContext);
         
 
         useEffect(() => {
-                // here we can check for a firebase user during app loading
-                // for now though, lets set it to wait one second and then set the user to false so that we always get to the login screen
-                console.log("Splash useEffect");
-                
-                setTimeout(async () => {
+                console.log("Splash useEffect start");
+                setTimeout(async() => {
                         const currentUser = firebase.getCurrentUser();
-                        if (currentUser) {
-                                console.log("Splash useEffect firebase.getCurrentUser result: ", currentUser.uid);
-                                const userInfo = await firebase.getUserInfo(currentUser.uid)
+                        if(currentUser){
+                                console.log("Splash before getUserInfo() ", currentUser.uid);
+                                const userInfo = await firebase.getUserInfo(currentUser.uid); 
+                                console.log("Splash result getUserInfo, ", userInfo);
                                 setUser({
                                         isLoggedIn: true,
                                         email: userInfo.email,
-                                        uid: currentUser.uid,
                                         username: userInfo.username,
-                                });
-                                console.log("Splash useEffect user info: ", userInfo);
+                                        uid: currentUser.uid
+                                })
+
                         } else {
-                                setUser((state) => ({ ...state, isLoggedIn: false}));
+                                console.log("Splash useEffect user not found");
+                                setUser(state => ({...state, isLoggedIn: false}));
                         }
-                }, 300);
-
+                }, 1000)
         }, []);
-
-
-        // useLayoutEffect(() => {
-        //         console.log("Splash useLayoutEffect")
-        //         setTimeout(async () => {
-        //                 const user = firebase.getCurrentUser();
-        //                 if (user) {
-        //                         console.log("Splash useLayoutEffect firebase.getCurrentUser result: ", user.uid);
-        //                         const userInfo = await firebase.getUserInfo(user.uid)
-        //                         setUser({
-        //                                 isLoggedIn: true,
-        //                                 email: userInfo.email,
-        //                                 uid: user.uid,
-        //                                 username: userInfo.username,
-        //                         });
-        //                         console.log("Splash user info: ", userInfo);
-        //                 } else {
-        //                         setUser((state) => ({ ...state, isLoggedIn: false}));
-        //                 }
-        //         }, 300);
-        // }, []);
-
 
         return (
                 <View style={styles.centerAlign}>
@@ -73,3 +49,4 @@ const styles = StyleSheet.create({
                 justifyContent: 'center'
         }
 })
+

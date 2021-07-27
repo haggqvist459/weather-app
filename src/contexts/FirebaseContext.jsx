@@ -52,10 +52,9 @@ const Firebase = {
                         const user = await db.collection(DB_USER_COLLECTION_NAME).doc(uid).get()
 
                         if (user.exists) {
-                                return user.data()
-                        } else {
-                                return false
-                        }
+                                console.log("@getUserInfo, results: ", user.data());
+                                return user.data() 
+                        } 
 
                 } catch (error) {
                         console.log('Error @getUserInfo: ', error.message);

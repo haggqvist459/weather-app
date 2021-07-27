@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, Button, StatusBar } from 'react-native'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
 import HeaderButton from '../components/HeaderButton';
+import { Location } from '../components/home';
 
 
 const Home = ({ navigation }) => {
 
         const [user] = useContext(UserContext);
-
 
         useLayoutEffect(() => {
                 navigation.setOptions({
@@ -23,9 +23,9 @@ const Home = ({ navigation }) => {
 
         return (
                 <View style={styles.centerAlign}>
-                        <StatusBar barStyle="dark-content"/>
-                        <Text>Home</Text>
-                        <Button onPress={tempFunction} title='Weather Details'/> 
+                        <StatusBar barStyle="light-content"/>
+                        <Location/>
+                        
                 </View>
         )
 }
@@ -36,14 +36,8 @@ const styles = StyleSheet.create({
         centerAlign: {
                 flex: 1,
                 alignItems: 'center',
-                justifyContent: 'center',
-                // backgroundColor: 'white',
-        },
-        headerButton: {
-                marginRight: 15,
-                padding: 5,
-                // borderWidth: 1,
-                // borderColor: 'green'
+                // justifyContent: 'center',
+                marginTop: 10,
         }
 })
 

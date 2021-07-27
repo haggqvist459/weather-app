@@ -1,28 +1,20 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import AuthStackScreens from './AuthStackScreens';
 import MainStackScreens from './MainStackScreens';
 import { UserContext } from '../contexts/UserContext';
-import { FirebaseContext } from '../contexts/FirebaseContext';
 import { Splash } from '../screens';
 
 export default AppStackScreens = () => {
 
 
         const AppStack = createStackNavigator();
-        const [user, setUser] = useContext(UserContext);
-        const firebase = useContext(FirebaseContext);
+        const [user] = useContext(UserContext);
 
-        // useEffect(() => {
-        //          const uid =  firebase.getCurrentUser().uid;
-        //         console.log("AppStackScreens getCurrentUser result: ", uid)
-        // }, [])
 
         return (
                 <AppStack.Navigator headerMode="none">
-                        {
-                        user.isLoggedIn === null ?
-                                <AppStack.Screen name={"Splash"} component={Splash} />
+                        {user.isLoggedIn === null ? <AppStack.Screen name={"Splash"} component={Splash} />
                                 :
                                 user.isLoggedIn ?
                                         <AppStack.Screen name="Main" component={MainStackScreens} />
@@ -33,7 +25,7 @@ export default AppStackScreens = () => {
         )
 }
 
-/* 
+/*
 
   {user.isLoggedIn === null ?
                                 <AppStack.Screen name={"Splash"} component={Splash} />
