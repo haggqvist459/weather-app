@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, ActivityIndicator, } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
 import { FirebaseContext } from '../contexts/FirebaseContext'
@@ -6,33 +6,54 @@ import { FirebaseContext } from '../contexts/FirebaseContext'
 
 const Splash = () => {
 
-        const [_, setUser] = useContext(UserContext);
+        const [user, setUser] = useContext(UserContext);
         const firebase = useContext(FirebaseContext);
+        
 
         useEffect(() => {
                 // here we can check for a firebase user during app loading
                 // for now though, lets set it to wait one second and then set the user to false so that we always get to the login screen
-                console.log("useEffect Splash");
-
-                setTimeout(async() => {
-                        const user = firebase.getCurrentUser();
-                        console.log("Splash screen firebase.getCurrentUser result: ", user.uid);
-                        if (user) {
-                                const userInfo = await firebase.getUserInfo(user.uid)
+                console.log("Splash useEffect");
+                
+                setTimeout(async () => {
+                        const currentUser = firebase.getCurrentUser();
+                        if (currentUser) {
+                                console.log("Splash useEffect firebase.getCurrentUser result: ", currentUser.uid);
+                                const userInfo = await firebase.getUserInfo(currentUser.uid)
                                 setUser({
                                         isLoggedIn: true,
                                         email: userInfo.email,
-                                        uid: user.uid,
+                                        uid: currentUser.uid,
                                         username: userInfo.username,
-                                        // isLoading: false
-                                })
-                                console.log("splash screen user info: ", userInfo);
+                                });
+                                console.log("Splash useEffect user info: ", userInfo);
                         } else {
                                 setUser((state) => ({ ...state, isLoggedIn: false}));
                         }
                 }, 300);
+
         }, []);
 
+
+        // useLayoutEffect(() => {
+        //         console.log("Splash useLayoutEffect")
+        //         setTimeout(async () => {
+        //                 const user = firebase.getCurrentUser();
+        //                 if (user) {
+        //                         console.log("Splash useLayoutEffect firebase.getCurrentUser result: ", user.uid);
+        //                         const userInfo = await firebase.getUserInfo(user.uid)
+        //                         setUser({
+        //                                 isLoggedIn: true,
+        //                                 email: userInfo.email,
+        //                                 uid: user.uid,
+        //                                 username: userInfo.username,
+        //                         });
+        //                         console.log("Splash user info: ", userInfo);
+        //                 } else {
+        //                         setUser((state) => ({ ...state, isLoggedIn: false}));
+        //                 }
+        //         }, 300);
+        // }, []);
 
 
         return (

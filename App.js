@@ -23,37 +23,58 @@ export default App = () => {
 
 NEXT TO DO: 
 
-**** TROBLESHOOT RAN'S ERRORS
-
-        ** Sign up screen - logic
-                * password & email checks
-                * verify the user before updating user context 
-        ** profile screen - logic 
-                * password & user name validation
+*** Add weather API
+        * 
 
 IN PROGRESS:
 
-**** TROBLESHOOT RAN'S ERRORS
+*** Weather API
+        ** Current weather 
+        ** 5 day / 3 hour forecast 
+        ** https://openweathermap.org/weather-conditions
+                * Switch case for the icons depending on the weather ID 
 
+*** Home screen - UI & logic
+        ** Search/add city to list
+        ** UI for the current location 
+        ** Flatlist with cities, current location as first choice
+                * just the city names & delete button next to it
+                * each item in list links to the weather details screen with the data for that city
+                * 
 
 TODO :
 
-* Add weather API
-* Home screen - UI & logic
-* Weather details - UI & logic
+*** Home screen - UI & logic
+        ** UI for the current location 
+        ** Search/add city to list
+        ** Flatlist with cities, current location as first choice
+                * just the city names & delete button next to it
+                * each item in list links to the weather details screen with the data for that city
+        
+*** Weather details - UI & logic
+        ** Top of component
+                * City name
+                * Temperature & icon
+        ** Icon
+                * Switch case based on ID 
+        ** Current weather
+                * Some weather details from the API
+        ** Weather forecast
+                * Icons & temperature information
 
-*** Checks & Validations: 
-        * splash screen current user
-        * sign up screen sign up function, see comments in component
-** profile screen - logic 
-         * password & user name validation
 
 
 EXTRAS:
-*** basic splash/loading screen
+*** Splash screen - logic
         * useEffect to check for user and proper redirect 
-** Profile Screen
+** Sign up screen - logic
+        * password & email checks
+        * verify the user before updating user context 
+** profile screen - logic 
+        * password & user name validation
         * update user info (email)
+
+        
 * Header button opens menu instead of link to profile screen
 * Customize splash screen
 * Global styles

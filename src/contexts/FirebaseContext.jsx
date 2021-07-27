@@ -20,18 +20,6 @@ const db = firebase.firestore();
 // create a custom JSON object with all the firebase functions
 const Firebase = {
         getCurrentUser: () => {
-                // try {
-                //         firebase.auth().onAuthStateChanged(function (user) {
-                //                 if (user) {
-                //                         console.log('getCurrentUser UID: ', user.uid);
-                //                         return user;
-                //                 } else {
-                //                         return null;
-                //                 }
-                //         });
-                // } catch (error) {
-                //         console.log('error @getCurrentUser: ', error.message);
-                // }
                 return firebase.auth().currentUser;
         },
         createUser: async (user) => {
@@ -65,10 +53,13 @@ const Firebase = {
 
                         if (user.exists) {
                                 return user.data()
+                        } else {
+                                return false
                         }
 
                 } catch (error) {
                         console.log('Error @getUserInfo: ', error.message);
+                        return false
                 }
         },
         signOut: async () => {
@@ -86,7 +77,7 @@ const Firebase = {
                 return firebase.auth().signInWithEmailAndPassword(email, password);
         },
         reauthenticateUser: async (currentPassword) => {
-                
+
                 try {
                         let credential = firebase.auth.EmailAuthProvider.credential(
                                 firebase.auth().currentUser.email,

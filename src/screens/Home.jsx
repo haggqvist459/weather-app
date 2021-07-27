@@ -1,5 +1,5 @@
 import React, { useContext, useLayoutEffect } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, StatusBar } from 'react-native'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
 import HeaderButton from '../components/HeaderButton';
@@ -23,6 +23,7 @@ const Home = ({ navigation }) => {
 
         return (
                 <View style={styles.centerAlign}>
+                        <StatusBar barStyle="dark-content"/>
                         <Text>Home</Text>
                         <Button onPress={tempFunction} title='Weather Details'/> 
                 </View>

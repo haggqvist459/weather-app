@@ -1,27 +1,18 @@
 import React, { useLayoutEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons';
-import { ROUTES } from '../utils/constants'
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native'
+import HeaderButton from '../components/HeaderButton';
 
 const WeatherDetails = ({ navigation }) => {
 
-        const handleHeaderPress = () => {
-                console.log("header button pressed");
-                navigation.navigate(ROUTES.PROFILE);
-        } 
-
         useLayoutEffect(() => {
                 navigation.setOptions({
-                        headerRight: () => (
-                                <TouchableOpacity style={styles.headerButton} onPress={handleHeaderPress}>
-                                        <MaterialIcons name="account-circle" size={32} color="black" />
-                                </TouchableOpacity>
-                        ),
+                        headerRight: () => (<HeaderButton navigation={navigation}/>),
                 })
         }, [navigation])
         
         return (
                 <View style={styles.centerAlign}>
+                        <StatusBar barStyle="dark-content"/>
                         <Text>Weather Detail</Text>
                 </View>
         )

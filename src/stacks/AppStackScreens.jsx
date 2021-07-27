@@ -14,8 +14,8 @@ export default AppStackScreens = () => {
         const firebase = useContext(FirebaseContext);
 
         // useEffect(() => {
-        //         //  const uid =  firebase.getCurrentUser();
-        //         // console.log("AppStackScreens getCurrentUser result: ", uid)
+        //          const uid =  firebase.getCurrentUser().uid;
+        //         console.log("AppStackScreens getCurrentUser result: ", uid)
         // }, [])
 
         return (
