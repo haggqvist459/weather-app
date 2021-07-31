@@ -1,12 +1,22 @@
 import 'react-native-gesture-handler'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import React, { useEffect } from 'react'
+import { LogBox } from 'react-native'
+import { NavigationContainer, StatusBar } from '@react-navigation/native'
 import AppStackScreens from './src/stacks/AppStackScreens'
 import { UserProvider } from './src/contexts/UserContext'
 import { FirebaseProvider } from './src/contexts/FirebaseContext'
 
 
 const App = () => {
+
+        useEffect(() => {
+                console.log("App useEffect start")
+                // ignore the warnings from firebase, only happens on Android
+                LogBox.ignoreLogs(['Setting a timer']);
+                return () => {
+                        console.log("App useEffect return")
+                }
+        }, [])
 
         return (
                 <FirebaseProvider>
@@ -25,10 +35,10 @@ export default App;
 
 /*
 
-NEXT TO DO: 
+NEXT TO DO:
 
 *** Home screen - UI & logic
-        ** UI for the current location 
+        ** UI for the current location
         ** Search/add city to list
         ** Flatlist with cities, current location as first choice
                 * just the city names & delete button next to it
@@ -36,39 +46,39 @@ NEXT TO DO:
 
 *** Add weather API
 
-        
+
 
 IN PROGRESS:
 
 *** Weather API
-        ** Current weather 
-        ** 5 day / 3 hour forecast 
+        ** Current weather
+        ** 5 day / 3 hour forecast
         ** https://openweathermap.org/weather-conditions
-                * Switch case for the icons depending on the weather ID 
+                * Switch case for the icons depending on the weather ID
 
 *** Home screen - UI & logic
         ** Search/add city to list
-        ** UI for the current location 
+        ** UI for the current location
         ** Flatlist with cities, current location as first choice
                 * just the city names & delete button next to it
                 * each item in list links to the weather details screen with the data for that city
-                * 
+                *
 
 TODO :
 
 *** Home screen - UI & logic
-        ** UI for the current location 
+        ** UI for the current location
         ** Search/add city to list
         ** Flatlist with cities, current location as first choice
                 * just the city names & delete button next to it
                 * each item in list links to the weather details screen with the data for that city
-        
+
 *** Weather details - UI & logic
         ** Top of component
                 * City name
                 * Temperature & icon
         ** Icon
-                * Switch case based on ID 
+                * Switch case based on ID
         ** Current weather
                 * Some weather details from the API
         ** Weather forecast
@@ -78,15 +88,15 @@ TODO :
 
 EXTRAS:
 *** Splash screen - logic
-        * useEffect to check for user and proper redirect 
+        * useEffect to check for user and proper redirect
 ** Sign up screen - logic
         * password & email checks
-        * verify the user before updating user context 
-** profile screen - logic 
+
+** profile screen - logic
         * password & user name validation
         * update user info (email)
 
-        
+
 * Header button opens menu instead of link to profile screen
 * Customize splash screen
 * Global styles
@@ -101,7 +111,8 @@ COMPLETED:
 * Firebase project setup
 * Add Firebase to the app
 * Sign In UI & logic
-* Sign Up UI
+** Sign Up UI
+        * verify the user before updating user context
 *** Add Auth flow (useContext)
         ** Firebase Context
                 * sign in
@@ -110,8 +121,8 @@ COMPLETED:
                 * getcurrentuser
                 * getuser info
 ** Profile Screen
-        * log out 
-** MainStackScreens header component 
+        * log out
+** MainStackScreens header component
         * Icon with link to profile screen
         * header title to be set to the user name on profile screen
 *** Profile Screen

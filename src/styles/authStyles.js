@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export const authStyles = StyleSheet.create({
+        container: {
+                flex: 1,
+        },
         centerAlign: {
                 flex: 1,
                 alignItems: 'center',
@@ -14,6 +17,12 @@ export const authStyles = StyleSheet.create({
                 borderWidth: 1,
         },
         passwordView: {
+                width: '90%',
+                padding: 10,
+                margin: 10,
+                borderWidth: 1,
+        },
+        inputView: {
                 width: '90%',
                 padding: 10,
                 margin: 10,

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -20,31 +20,49 @@ const db = firebase.firestore();
 // create a custom JSON object with all the firebase functions
 const Firebase = {
         getCurrentUser: () => {
-                return firebase.auth().currentUser;
+        
+                // firebase.auth().onAuthStateChanged((user) => {
+                //         if(user){
+                //                 console.log("@Firebase.getCurrentUser() result: ", user);
+                //                 return user;
+                //         } else { return null }
+                // }).then(() => {
+
+                // })
+                return firebase.auth().currentUser 
+
+                
         },
         createUser: async (user) => {
                 try {
                         // create a user in the authentication portion of firebase
-                        await firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
-
-                        // we also need a user in the firestore collection of users, to be able to store collections associated with that user
-                        const uid = Firebase.getCurrentUser().uid;
-
-                        await db.collection(DB_USER_COLLECTION_NAME).doc(uid).set({
-                                username: user.username,
-                                email: user.email,
-                        }).then(
-                                console.log('successfully added user')
-                        );
+                        
+                        firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+                                .then((response) => {
+                                        console.log("@Firebase.createUser response: ", response.user);
+                                        db.collection(DB_USER_COLLECTION_NAME).doc(response.user.uid).set({
+                                                username: user.username,
+                                                email: user.email,
+                                        })
+                                        .then(
+                                                console.log("Successfully created firestore document!")
+                                        )
+                                        .catch((error) => {
+                                                console.log("Error writing to firestore: ", error.message);
+                                        })
+                                })
+                                .catch((error) => {
+                                        console.log("Error @Firebase.createUser: ", error.message);
+                                })
 
                         // we no longer need the password
                         delete user.password
-
-                        return { ...user, uid }
+                        // maybe return true or something that can be used to check whether everything went OK
+                        return { ...user }
 
                 } catch (error) {
-                        console.log('Error @createUser ', error.message);
                         console.log('Error @createUser ', error.code);
+                        console.log('Error @createUser ', error.message);
                 }
         },
         getUserInfo: async (uid) => {
@@ -62,18 +80,33 @@ const Firebase = {
                 }
         },
         signOut: async () => {
-                try {
-                        await firebase.auth().signOut();
-                        return true;
-                }
-                catch (error) {
-                        console.log("Error @Firebase signOut: ", error.message);
-                }
 
-                return false;
+                return new Promise((resolve, reject) => {
+                        firebase.auth().signOut()
+                          .then(() => {
+                            resolve( true )
+                          })
+                          .catch((error) => {
+                            console.log("Error @Firebase.signOut: ", error.message);
+                            reject( error );
+                          })
+                      })
         },
         signIn: async (email, password) => {
-                return firebase.auth().signInWithEmailAndPassword(email, password);
+                // let user;
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((response) => {
+                        console.log("Firebase.signIn().then() response: ", response.user);
+                        return response.user;
+                })
+                .catch((error) => {
+                        console.log("Error @Firebase.signIn(): ", error.message)
+                        return null;
+                })
+                // .finally(() => {
+                //         console.log("firebase.signIn().finally() ", )
+                //         return user;
+                // })
         },
         reauthenticateUser: async (currentPassword) => {
 
@@ -133,8 +166,35 @@ export { FirebaseContext, FirebaseProvider };
 
 
 /*
-maybe require('firebase/auth)
-maybe require('firebase/firestore)
+
+Previous signIn: 
+        return firebase.auth().signInWithEmailAndPassword(email, password)
+
+Previous signUp: 
+        await firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+        const uid = Firebase.getCurrentUser().uid;
+         
+        we also need a user in the firestore collection of users, to be able to store collections associated with that user
+        await db.collection(DB_USER_COLLECTION_NAME).doc(uid).set({
+                username: user.username,
+                mail: user.email,
+                }).then(
+                        console.log('successfully added user')
+                );
+
+Previous getCurrentUser:
+        // return firebase.auth().currentUser 
+
+Previous signOut: 
+        try {
+                        await firebase.auth().signOut();
+                        return true;
+                }
+                catch (error) {
+                        console.log("Error @Firebase signOut: ", error.message);
+                }
+
+                return false;
 
 
 alternative way to get current user
@@ -150,12 +210,26 @@ alternative way to get current user
 
 
 
-alternative sign in
-                // try {
-                //         await firebase.auth().signInWithEmailAndPassword(email, password);
-                //         return true;
-                // } catch (error) {
-                //         console.log("Error @Firebase signIn: ", error.message);
-                // }
-                // return false;
+firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        console.log(response)
+        setAuth(true)
+      })
+      .catch((error) => console.log(error))
+
+
+  const HandleSignout = () => {
+    return new Promise((resolve, reject) => {
+      firebase.auth().signOut()
+        .then(() => {
+          setAuth(false)
+          resolve( true )
+        })
+        .catch((error) => {
+          console.log(error)
+          reject( error )
+        })
+    })
+  }
+
 */

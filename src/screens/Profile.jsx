@@ -78,7 +78,6 @@ const Profile = ({ navigation }) => {
                                         onChangeText={(value) => setNewUsername(value)}
                                 />
                         </View>
-
                         <View style={authStyles.signInView} >
                                 <TouchableOpacity onPress={() => handleUpdateUsername()} style={authStyles.signInButton}>
                                         {saveUserNameLoading ?
@@ -103,7 +102,6 @@ const Profile = ({ navigation }) => {
                                         </TouchableOpacity>
                                 </View>
                         </View>
-
                         <View style={authStyles.passwordView}>
                                 <Text style={authStyles.viewHeader}>Current password: </Text>
                                 <View style={authStyles.passwordRow}>
@@ -126,9 +124,70 @@ const Profile = ({ navigation }) => {
                                                 <Text style={authStyles.signInText}>{'Update Password'}</Text>}
                                 </TouchableOpacity>
                         </View>
+        
+
                 </View>
         )
 }
 
 export default Profile
+
+const styles = StyleSheet.create({
+        profileContainer: {
+                flex: 1,
+                alignItems: 'center',
+                marginTop: 25,
+        },
+        updateUserNameContainer: {
+                width: '90%',
+                borderWidth: 1,
+                borderColor: 'black',
+
+        },
+
+        updatePasswordContainer: {
+                width: '90%',
+                borderWidth: 1,
+                borderColor: 'black',
+
+        },
+        inputView: {
+                padding: 10,
+                margin: 10,
+                borderWidth: 1,
+        },
+        inputHeader: {
+                fontSize: 12,
+        },
+        textInput: {
+                fontSize: 14,
+                width: '100%',
+                marginTop: 15,
+                paddingBottom: 10,
+                borderBottomWidth: 1,
+                alignSelf: 'center',
+        },
+        passwordInputRow: {
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+        },
+        passwordInputIcon: {
+                position: 'absolute',
+                right: -5,
+                padding: 10
+        },
+        saveButton: {
+                width: '100%',
+                padding: 10,
+        },
+        saveButtonText: {
+                fontSize: 22,
+                alignSelf: 'center'
+        },
+
+})
+
+
+
 
