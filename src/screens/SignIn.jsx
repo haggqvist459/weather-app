@@ -66,15 +66,16 @@ const SignIn = ({ navigation }) => {
                                 <Main>
                                         <HeaderGraphics/>
                                         <TitleContainer>
-                                                <Text title semi center>
+                                                <Text title bold center>
                                                         Welcome Back!
                                                 </Text>
                                         </TitleContainer>
                                         <Auth>
                                                 <AuthContainer>
-                                                        <Text tiny semi left uppercase color={COLORS.GRAY}>Email Address:</Text>
+                                                        <Text tiny semiBold left uppercase color={COLORS.GRAY}>Email Address:</Text>
                                                         <Input
-                                                                mediumLarge
+                                                                large
+                                                                width={'100%'}
                                                                 autoCapitalize="none"
                                                                 autoCompleteType="email"
                                                                 autoCorrect={false}
@@ -83,11 +84,11 @@ const SignIn = ({ navigation }) => {
                                                         />
                                                 </AuthContainer>
                                                 <AuthContainer>
-                                                        <Text tiny semi left uppercase color={COLORS.GRAY}>Password:</Text>
+                                                        <Text tiny semiBold left uppercase color={COLORS.GRAY}>Password:</Text>
                                                         <PasswordInputView>
                                                                 <Input
+                                                                        medium
                                                                         width={'90%'}
-                                                                        mediumLarge
                                                                         borderBottomWidth={'0px'}
                                                                         autoCapitalize="none"
                                                                         autoCompleteType="password"
@@ -106,7 +107,7 @@ const SignIn = ({ navigation }) => {
                                                 disabled={loading}>
                                                 {loading ?
                                                         <Loading /> :
-                                                        <Text bold center color={COLORS.WHITE_COFFEE}>Sign In</Text>}
+                                                        <Text mediumLarge bold center color={COLORS.WHITE_COFFEE}>Sign In</Text>}
                                         </SignInButton>
                                         <SignUpLink onPress={() => navigation.navigate('SignUp')}>
                                                 <Text small center>New to the app? <Text bold underline color={COLORS.PRIMARY_TEXT}>Sign Up!</Text></Text>
@@ -148,8 +149,9 @@ const PasswordInputView = styled.View`
 const PasswordIconToggle = styled.TouchableOpacity`
         position: absolute;
         right: 5px;
-        top: 8px;
-        /* padding: 5px; */
+        top: 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
 `;
 
 const SignInButton = styled.TouchableOpacity`
@@ -168,6 +170,7 @@ const Loading = styled.ActivityIndicator.attrs((props) => ({
 
 const SignUpLink = styled.TouchableOpacity`
         margin-top: 8px;
+        padding: 5px;
 `;
 
 

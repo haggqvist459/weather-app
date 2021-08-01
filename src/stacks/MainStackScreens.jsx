@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Home, Profile, WeatherDetails } from '../screens'
 import { ROUTES } from '../utils/constants'
 import { UserContext } from '../contexts/UserContext'
+import TextTest from '../screens/TextTest'
 
 const MainStackScreens = () => {
 
@@ -14,6 +15,7 @@ const MainStackScreens = () => {
         return (
                 <MainStack.Navigator>
                         <MainStack.Screen name={ROUTES.HOME} component={Home} />
+                        <MainStack.Screen name={'TextTest'} component={TextTest} />
                         <MainStack.Screen 
                                 name={ROUTES.PROFILE} 
                                 component={Profile} 

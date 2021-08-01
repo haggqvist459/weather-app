@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles/colors'
+import adjustSize from '../../utils/fontSizeAdjuster'
+import { FONT_NAME } from '../../utils/loadFonts'
 
 const Text = ({ ...props }) => {
         return (
@@ -15,53 +17,75 @@ const CustomText = styled.Text`
         margin: ${props => props.margin ?? 0};
         padding: ${props => props.padding ?? 0};
         text-decoration-color: ${props => props.color ?? COLORS.CARROT_ORANGE};
+        /* font-family: 'SourceSansPro-Regular'; */
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
                 switch (true) {
                         case title:
-                                return `font-size: 32px;`;
+                                return `font-size: ${adjustSize(32)}px;`;
 
                         case large:
-                                return `font-size: 24px;`;
+                                return `font-size: ${adjustSize(24)}px;`;
 
                         case mediumLarge: 
-                                return `font-size: 20px`;
+                                return `font-size: ${adjustSize(20)}px`;
 
                         case medium:
-                                return `font-size: 16px;`;
+                                return `font-size: ${adjustSize(16)}px;`;
 
                         case small:
-                                return `font-size: 13px;`;
+                                return `font-size: ${adjustSize(13)}px;`;
 
                         case tiny:
-                                return `font-size: 11px;`;
+                                return `font-size: ${adjustSize(13)}px;`;
 
                         default:
-                                return `font-size: 14px;`;
+                                return `font-size: ${adjustSize(14)}px;`;
                 }
         }}
 
-        ${({ heavy, bold, semi, light, thin }) => {
+        ${({ black, blackItalic, bold, boldItalic,  semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
                 switch (true) {
-                        case heavy:
-                                return `font-weight: 900;`;
+                        case black:
+                                return `font-family: ${FONT_NAME}-Black;`;
+
+                        case blackItalic:
+                                return `font-family: ${FONT_NAME}-BlackItalic;`;
 
                         case bold:
-                                return `font-weight: 700;`;
+                                return `font-family: ${FONT_NAME}-Bold;`;
 
-                        case semi: 
-                                return `font-weight: 500;`;
+                        case boldItalic:
+                                return `font-family: ${FONT_NAME}-BoldItalic;`;
+
+                        case semiBold: 
+                                return `font-family: ${FONT_NAME}-SemiBold;`;
+                        
+                        case semiBoldItalic: 
+                                return `font-family: ${FONT_NAME}-SemiBoldItalic;`;
 
                         case light:
-                                return `font-weight: 300;`;
+                                return `font-family: ${FONT_NAME}-Light;`;
+                        
+                        case lightItalic:
+                                return `font-family: ${FONT_NAME}-LightItalic;`;
 
-                        case thin:
-                                return `font-weight: 100;`;
+                        case extraLight:
+                                return `font-family: ${FONT_NAME}-ExtraLight;`;
+                        
+                        case extraLightItalic:
+                                return `font-family: ${FONT_NAME}-ExtraLightItalic;`;
+
+                        case italic:
+                                return `font-family: ${FONT_NAME}-Italic;`;
 
                         default:
-                                return `font-weight: 400;`;
+                                return `font-family: ${FONT_NAME}-Regular;`;
                 }
         }}
+
+
+        
 
         ${({ center, right, justify }) => {
                 switch (true) {
@@ -97,12 +121,42 @@ const CustomText = styled.Text`
                         case uppercase:
                                 return `text-transform: uppercase;`;
                         case lowercase:
-                                return `text-transform: uppercase;`;
+                                return `text-transform: lowercase;`;
                         case capitalize:
-                                return `text-transform: uppercase;`;
+                                return `text-transform: capitalize;`;
                         default:
                                 return `text-transform: none`;
                 }
         }}
+
 `;
 
+
+//align-self switch case
+
+
+/* 
+
+        ${({ heavy, bold, semi, light, thin }) => {
+                switch (true) {
+                        case heavy:
+                                return `font-weight: 900;`;
+
+                        case bold:
+                                return `font-weight: 700;`;
+
+                        case semi: 
+                                return `font-weight: 600;`;
+
+                        case light:
+                                return `font-weight: 300;`;
+
+                        case thin:
+                                return `font-weight: 200;`;
+
+                        default:
+                                return `font-weight: 400;`;
+                }
+        }}
+
+*/

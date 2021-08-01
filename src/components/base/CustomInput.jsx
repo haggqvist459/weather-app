@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles/colors'
+import adjustSize from '../../utils/fontSizeAdjuster'
+import { FONT_NAME } from '../../utils/loadFonts'
 
 const TextInput = ({ ...props }) => {
         return (
@@ -18,53 +20,76 @@ const CustomInput = styled.TextInput`
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
         padding: ${props => props.padding ?? 0};
         margin: ${props => props.margin ?? 0};
-        height: ${props => props.height ?? '42px'};
+        height: ${props => props.height ?? '28px'};
         width: ${props => props.width ?? '100%'};
+        margin-bottom: ${props => props.marginBottom ?? '0px'};
 
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
                 switch (true) {
                         case title:
-                                return `font-size: 32px;`;
+                                return `font-size: ${adjustSize(32)}px;`;
 
                         case large:
-                                return `font-size: 24px;`;
+                                return `font-size: ${adjustSize(24)}px;`;
 
-                        case mediumLarge:
-                                return `font-size: 20px`;
+                        case mediumLarge: 
+                                return `font-size: ${adjustSize(20)}px`;
 
                         case medium:
-                                return `font-size: 16px;`;
+                                return `font-size: ${adjustSize(16)}px;`;
 
                         case small:
-                                return `font-size: 13px;`;
+                                return `font-size: ${adjustSize(13)}px;`;
 
                         case tiny:
-                                return `font-size: 11px;`;
+                                return `font-size: ${adjustSize(13)}px;`;
 
                         default:
-                                return `font-size: 14px;`;
+                                return `font-size: ${adjustSize(14)}px;`;
                 }
         }}
 
-        ${({ heavy, bold, semi, light }) => {
+        ${({ black, blackItalic, bold, boldItalic,  semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
                 switch (true) {
-                        case heavy:
-                                return `font-weight: 700;`;
+                        case black:
+                                return `font-family: ${FONT_NAME}-Black;`;
+
+                        case blackItalic:
+                                return `font-family: ${FONT_NAME}-BlackItalic;`;
 
                         case bold:
-                                return `font-weight: 600;`;
+                                return `font-family: ${FONT_NAME}-Bold;`;
 
-                        case semi:
-                                return `font-weight: 300;`;
+                        case boldItalic:
+                                return `font-family: ${FONT_NAME}-BoldItalic;`;
+
+                        case semiBold: 
+                                return `font-family: ${FONT_NAME}-SemiBold;`;
+                        
+                        case semiBoldItalic: 
+                                return `font-family: ${FONT_NAME}-SemiBoldItalic;`;
 
                         case light:
-                                return `font-weight: 200;`;
+                                return `font-family: ${FONT_NAME}-Light;`;
+                        
+                        case lightItalic:
+                                return `font-family: ${FONT_NAME}-LightItalic;`;
+
+                        case extraLight:
+                                return `font-family: ${FONT_NAME}-ExtraLight;`;
+                        
+                        case extraLightItalic:
+                                return `font-family: ${FONT_NAME}-ExtraLightItalic;`;
+
+                        case italic:
+                                return `font-family: ${FONT_NAME}-Italic;`;
 
                         default:
-                                return `font-weight: 400;`;
+                                return `font-family: ${FONT_NAME}-Regular;`;
                 }
         }}
+
 
         ${({ underline, lineThrough }) => {
                 switch (true) {
@@ -100,4 +125,6 @@ const CustomInput = styled.TextInput`
 border-bottom-color: #8C8B8B;
 border-bottom-width: 0.5px;
 height: 48px;
+
+
 */

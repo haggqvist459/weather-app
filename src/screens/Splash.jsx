@@ -6,11 +6,26 @@ import { FirebaseContext } from '../contexts/FirebaseContext'
 import HeaderGraphics from '../components/HeaderGraphics'
 import { Text } from '../components/base'
 import { COLORS } from '../styles/colors'
+import loadFonts from '../utils/loadFonts'
 
 
+/* 
+
+maybe do navigation.navigate() 
+depending on the result of the firebase fetching
+
+might be easier to get to correct screen
+have to redo appstack
+
+
+*/
 
 const Splash = () => {
 
+        // let [fontsLoaded] = useFonts({
+        // });
+
+              
         const [_, setUser] = useContext(UserContext);
         const firebase = useContext(FirebaseContext);
         // const [appReady, setAppReady] = useState(false);
@@ -19,8 +34,16 @@ const Splash = () => {
         useEffect(() => {
                 console.log("Splash useEffect start");
 
+                // if(fontsLoaded) {
+                //         console.log("Fonts loaded");
+                // }
+
+
                 async function prepareUser() {
                         try {
+
+                                await loadFonts();
+
                                 const currentUser = firebase.getCurrentUser();
                                 if (currentUser) {
                                         console.log("Splash before getUserInfo() ", currentUser.uid);
@@ -82,7 +105,7 @@ const Splash = () => {
                                 {/* <Text title center semi>{"Another \n Weather App \n Loading..."}</Text> */}
                                 <AnimationView>
                                         <LottieView
-                                                source={require("../../assets/animations/loading-circle-blue.json")}
+                                                source={require("../assets/animations/loading-circle-blue.json")}
                                                 autoPlay
                                                 loop
                                                 // autoSize

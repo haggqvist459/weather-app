@@ -6,7 +6,7 @@ import { Text, Input } from '../components/base'
 import { MaterialIcons } from '@expo/vector-icons';
 import HeaderGraphics from '../components/HeaderGraphics'
 import { COLORS } from '../styles/colors'
-
+import adjustSize from '../utils/fontSizeAdjuster'
 
 // needs keyboard avoiding view etc
 const SignUp = ({ navigation }) => {
@@ -59,14 +59,14 @@ const SignUp = ({ navigation }) => {
                         <Main>
 
                                 <TitleContainer>
-                                        <Text large semi center>
+                                        <Text large semiBold center>
                                                 Sign up to get started!
                                         </Text>
                                 </TitleContainer>
 
                                 <Auth>
                                         <AuthContainer>
-                                                <Text tiny semi left uppercase color={COLORS.GRAY}>Username</Text>
+                                                <Text tiny semiBold left uppercase color={COLORS.GRAY}>Username</Text>
                                                 <Input
                                                         autoCorrect={false}
                                                         autoCapitalize='none'
@@ -74,7 +74,7 @@ const SignUp = ({ navigation }) => {
                                                 />
                                         </AuthContainer>
                                         <AuthContainer>
-                                                <Text tiny semi left uppercase color={COLORS.GRAY}>email</Text>
+                                                <Text tiny semiBold left uppercase color={COLORS.GRAY}>email</Text>
                                                 <Input
                                                         autoCapitalize="none"
                                                         autoCompleteType="email"
@@ -84,7 +84,7 @@ const SignUp = ({ navigation }) => {
                                                 />
                                         </AuthContainer>
                                         <AuthContainer>
-                                                <Text tiny semi left uppercase color={COLORS.GRAY}>Password:</Text>
+                                                <Text tiny semiBold left uppercase color={COLORS.GRAY}>Password:</Text>
                                                 <PasswordInputView>
                                                         <Input
                                                                 borderBottomWidth={'0px'}
@@ -96,7 +96,7 @@ const SignUp = ({ navigation }) => {
                                                                 onChangeText={(value) => setPassword(value)}
                                                         />
                                                         <PasswordIconToggle onPress={() => setPasswordHidden(!passwordHidden)}>
-                                                                <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={30} color={COLORS.PRIMARY_BUTTON} />
+                                                                <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={adjustSize(30)} color={COLORS.PRIMARY_BUTTON} />
                                                         </PasswordIconToggle>
                                                 </PasswordInputView>
                                         </AuthContainer>
@@ -107,12 +107,12 @@ const SignUp = ({ navigation }) => {
                                         disabled={loading}>
                                         {loading ?
                                                 <Loading /> :
-                                                <Text heavy center color={COLORS.WHITE_COFFEE}>Sign Up</Text>}
+                                                <Text bold mediumLarge center color={COLORS.WHITE_COFFEE}>Sign Up</Text>}
 
                                 </SignUpButton>
 
                                 <SignInLink onPress={() => navigation.navigate('SignIn')}>
-                                        <Text small center>Already registered? <Text bold underline color={COLORS.PRIMARY_TEXT}>Sign in!</Text></Text>
+                                        <Text medium center>Already registered? <Text bold medium underline color={COLORS.PRIMARY_TEXT}>Sign in!</Text></Text>
                                 </SignInLink>
 
                         </Main>
@@ -151,7 +151,9 @@ const PasswordInputView = styled.View`
 const PasswordIconToggle = styled.TouchableOpacity`
         position: absolute;
         right: 5px;
-        top: 12px;
+        top: 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
 `;
 
 const SignUpButton = styled.TouchableOpacity`
@@ -170,6 +172,7 @@ const Loading = styled.ActivityIndicator.attrs((props) => ({
 
 const SignInLink = styled.TouchableOpacity`
         margin-top: 8px;
+        padding: 5px;
 `;
 
 
