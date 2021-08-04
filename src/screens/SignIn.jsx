@@ -4,9 +4,11 @@ import { Alert, TouchableWithoutFeedback, Keyboard, Platform } from 'react-nativ
 import { UserContext } from '../contexts/UserContext';
 import { FirebaseContext } from '../contexts/FirebaseContext';
 import { Text, Input } from '../components/base';
+import HeaderGraphics from '../components/HeaderGraphics'
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS } from '../styles/colors';
-import HeaderGraphics from '../components/HeaderGraphics'
+import { ROUTES,  adjustSize} from '../utils/';
+
 // needs keyboard avoiding view etc
 
 
@@ -66,7 +68,7 @@ const SignIn = ({ navigation }) => {
                                 <Main>
                                         <HeaderGraphics/>
                                         <TitleContainer>
-                                                <Text title bold center>
+                                                <Text large bold center>
                                                         Welcome Back!
                                                 </Text>
                                         </TitleContainer>
@@ -74,7 +76,7 @@ const SignIn = ({ navigation }) => {
                                                 <AuthContainer>
                                                         <Text tiny semiBold left uppercase color={COLORS.GRAY}>Email Address:</Text>
                                                         <Input
-                                                                large
+                                                                mediumLarge
                                                                 width={'100%'}
                                                                 autoCapitalize="none"
                                                                 autoCompleteType="email"
@@ -87,7 +89,7 @@ const SignIn = ({ navigation }) => {
                                                         <Text tiny semiBold left uppercase color={COLORS.GRAY}>Password:</Text>
                                                         <PasswordInputView>
                                                                 <Input
-                                                                        medium
+                                                                        mediumLarge
                                                                         width={'90%'}
                                                                         borderBottomWidth={'0px'}
                                                                         autoCapitalize="none"
@@ -97,7 +99,7 @@ const SignIn = ({ navigation }) => {
                                                                         onChangeText={(value) => setPassword(value)}
                                                                 />
                                                                 <PasswordIconToggle onPress={() => setPasswordHidden(!passwordHidden)}>
-                                                                        <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={30} color={COLORS.PRIMARY_BUTTON} />
+                                                                        <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={adjustSize(30)} color={COLORS.PRIMARY_BUTTON} />
                                                                 </PasswordIconToggle>
                                                         </PasswordInputView>
                                                 </AuthContainer>
@@ -109,8 +111,8 @@ const SignIn = ({ navigation }) => {
                                                         <Loading /> :
                                                         <Text mediumLarge bold center color={COLORS.WHITE_COFFEE}>Sign In</Text>}
                                         </SignInButton>
-                                        <SignUpLink onPress={() => navigation.navigate('SignUp')}>
-                                                <Text small center>New to the app? <Text bold underline color={COLORS.PRIMARY_TEXT}>Sign Up!</Text></Text>
+                                        <SignUpLink onPress={() => navigation.navigate(ROUTES.SIGN_UP)}>
+                                                <Text medium center>New to the app? <Text bold medium underline color={COLORS.PRIMARY_TEXT}>Sign Up!</Text></Text>
                                         </SignUpLink>
                                 </Main>
                         </TouchableWithoutFeedback>
@@ -148,10 +150,10 @@ const PasswordInputView = styled.View`
 
 const PasswordIconToggle = styled.TouchableOpacity`
         position: absolute;
-        right: 5px;
-        top: 6px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+        right: 0;
+        /* padding: 5px; */
+        /* margin-bottom: 10px; */
+        /* padding-bottom: 5px; */
 `;
 
 const SignInButton = styled.TouchableOpacity`

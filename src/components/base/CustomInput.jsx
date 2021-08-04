@@ -20,7 +20,7 @@ const CustomInput = styled.TextInput`
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
         padding: ${props => props.padding ?? 0};
         margin: ${props => props.margin ?? 0};
-        height: ${props => props.height ?? '28px'};
+        height: ${props => props.height ?? '36px'};
         width: ${props => props.width ?? '100%'};
         margin-bottom: ${props => props.marginBottom ?? '0px'};
 

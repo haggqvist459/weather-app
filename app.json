@@ -5,7 +5,7 @@
     "sdkVersion": "42.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icons/icon.png",
+    "icon": "./src/assets/icons/adaptive-icon.png",
     "splash": {
       "image": "./src/assets/icons/splash.png",
       "resizeMode": "contain",

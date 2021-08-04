@@ -38,14 +38,18 @@ export default App;
 NEXT TO DO:
 
 *** Home screen - UI & logic
-        ** UI for the current location
+        ** UI for the current location ( first list item )
+                * convert the location coordinates into a city name ( api call )
         ** Search/add city to list
+                * verify that the seach term exists in the api ( api call )
+                * convert city search term into a list item
+                * 
         ** Flatlist with cities, current location as first choice
                 * just the city names & delete button next to it
                 * each item in list links to the weather details screen with the data for that city
-
-*** Add weather API
-
+                * store the list with async storage // check the todo list project
+                * load the list from async storage // check the todo list project 
+                * don't forget to separate the lists for each user 
 
 
 IN PROGRESS:
@@ -133,5 +137,7 @@ COMPLETED:
                 * update username
                 * update password
                 * reauthenticate user
+*** Add weather API
+        * Added API key & url prefix to client secrets folder
 */
 

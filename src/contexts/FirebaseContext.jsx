@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
-import config from '../utils/firebase'
+import config from '../utils/clientSecrets/firebase'
 import { DB_USER_COLLECTION_NAME } from '../utils/constants';
 
 

@@ -3,7 +3,7 @@ import * as Font from 'expo-font'
 
 export const FONT_NAME = 'SourceSansPro';
 
-export default loadFonts = async() => {
+const loadFonts = async() => {
 
         await Font.loadAsync({
                 //fontWeight 200
@@ -26,3 +26,5 @@ export default loadFonts = async() => {
                 'SourceSansPro-BlackItalic': require('../assets/fonts/SourceSansPro-BlackItalic.ttf'),
         })
 }
+
+export default loadFonts;

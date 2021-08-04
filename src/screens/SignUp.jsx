@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import { MaterialIcons } from '@expo/vector-icons';
 import { FirebaseContext } from '../contexts/FirebaseContext'
 import { UserContext } from '../contexts/UserContext'
 import { Text, Input } from '../components/base'
-import { MaterialIcons } from '@expo/vector-icons';
 import HeaderGraphics from '../components/HeaderGraphics'
 import { COLORS } from '../styles/colors'
-import adjustSize from '../utils/fontSizeAdjuster'
+import { adjustSize, ROUTES } from '../utils'
 
 // needs keyboard avoiding view etc
 const SignUp = ({ navigation }) => {
@@ -59,7 +59,7 @@ const SignUp = ({ navigation }) => {
                         <Main>
 
                                 <TitleContainer>
-                                        <Text large semiBold center>
+                                        <Text large bold center>
                                                 Sign up to get started!
                                         </Text>
                                 </TitleContainer>
@@ -111,8 +111,8 @@ const SignUp = ({ navigation }) => {
 
                                 </SignUpButton>
 
-                                <SignInLink onPress={() => navigation.navigate('SignIn')}>
-                                        <Text medium center>Already registered? <Text bold medium underline color={COLORS.PRIMARY_TEXT}>Sign in!</Text></Text>
+                                <SignInLink onPress={() => navigation.navigate(ROUTES.SIGN_IN)}>
+                                        <Text center>Already registered? <Text bold underline color={COLORS.PRIMARY_TEXT}>Sign in!</Text></Text>
                                 </SignInLink>
 
                         </Main>
@@ -132,11 +132,11 @@ const Main = styled.ScrollView`
         margin-bottom: 30px;
 `;
 const TitleContainer = styled.View`
-        margin-top: 150px;
+        margin-top: 130px;
 `;
 
 const Auth = styled.View`
-        margin: 32px 32px 32px;
+        margin: 26px 32px 26px;
 `;
 
 const AuthContainer = styled.View`
@@ -150,10 +150,9 @@ const PasswordInputView = styled.View`
 
 const PasswordIconToggle = styled.TouchableOpacity`
         position: absolute;
-        right: 5px;
-        top: 6px;
-        padding-top: 3px;
-        padding-bottom: 3px;
+        right: 0;
+        /* top: 3px; */
+        /* padding: 5px; */
 `;
 
 const SignUpButton = styled.TouchableOpacity`

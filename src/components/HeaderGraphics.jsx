@@ -1,23 +1,23 @@
-import React, { useLayoutEffect, useState} from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../styles/colors';
-import { Dimensions } from 'react-native';
+
 
 const HeaderGraphics = () => {
 
         return (
                 <Header>
-                        <Sky/>
+                        <Sky />
                         <Sun />
                         <CloudRightSmall />
                         <CloudRightBig />
                         <CloudLeftBig />
                         <CloudLeftSmall />
-                        <StatusBar 
-                                barStyle="light-content" 
+                        <StatusBar
+                                barStyle="light-content"
                                 translucent={true}
                                 backgroundColor={"transparent"}
-                                />
+                        />
                 </Header>
         )
 }
@@ -39,8 +39,6 @@ const Sky = styled.View`
         width: 400px;
         height: 400px;
         border-radius: 200px;
-
-        
 `;
 
 
@@ -52,7 +50,6 @@ const Sun = styled.View`
         width: 100px;
         height: 100px;
         border-radius: 50px;
-
 `;
 
 const CloudRightBig = styled.View`
@@ -99,10 +96,10 @@ const StatusBar = styled.StatusBar``;
 
 
 
-/* 
+/*
   const [deviceWidth, setDeviceWidth] = useState();
         const [deviceHeight, setDeviceHeight] = useState();
-        
+
         // circle diameter, top & side position needs to be passed into the components in order to dynamically render their styles
         const [viewWidth, setViewWidth] = useState();
 
@@ -112,17 +109,17 @@ const StatusBar = styled.StatusBar``;
                 const windowWidth = Dimensions.get('window').width;
                 const windowHeight = Dimensions.get('window').height;
 
-                setDeviceHeight(windowHeight);                
+                setDeviceHeight(windowHeight);
                 setDeviceWidth(windowWidth);
 
                 console.log("device width: ", deviceWidth);
                 console.log("device height: ", deviceHeight);
-                
+
                 switch (windowWidth) {
                         case (windowWidth >= 768):
                                 setViewWidth()
                                 break;
-                
+
                         default:
                                 break;
                 }

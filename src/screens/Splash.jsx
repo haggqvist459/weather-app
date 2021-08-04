@@ -94,21 +94,15 @@ const Splash = () => {
 
         }, []);
 
-        // if(!appReady){
-        //         return null
-        // }
-
         return (
                 <Container>
                         <HeaderGraphics />
                         <Main>
-                                {/* <Text title center semi>{"Another \n Weather App \n Loading..."}</Text> */}
                                 <AnimationView>
                                         <LottieView
                                                 source={require("../assets/animations/loading-circle-blue.json")}
                                                 autoPlay
                                                 loop
-                                                // autoSize
                                                 style={{ width: '50%' }}
                                         />
                                 </AnimationView>

@@ -16,6 +16,7 @@ const CustomText = styled.Text`
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
         margin: ${props => props.margin ?? 0};
         padding: ${props => props.padding ?? 0};
+        /* // fix this! */
         text-decoration-color: ${props => props.color ?? COLORS.CARROT_ORANGE};
         /* font-family: 'SourceSansPro-Regular'; */
 

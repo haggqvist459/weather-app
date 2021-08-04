@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react'
+import * as Location from 'expo-location'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 
-const Location = () => {
+const AddLocation = ({ handleSearch }) => {
 
+        // states for this component
         const [searchInput, setSearchInput] = useState('');
-        const [searchResult, setSearchResult] = useState();
-        const [showResults, setShowResults] = useState();
+        const [currentLocation, setCurrentLocation] = useState();
+        const [errorMsg, setErrorMsg] = useState();
 
-        const handleSearch = (searchInput) => {
-                console.log("handleSearch: ", searchInput);
+        // hook calls for this component
+        useEffect(() => {
+                // here we need to get the permissions to use location services
+  
+        }, []);
 
-                // Verify somehow that the city exists in the API list before adding it to the flatlist. 
-                // Maybe make an API call and verify the response?
-
-
-                setSearchResult(searchInput);
-                // also clear the search input?
+        const handleCurrentLocation = async() => {
+                let { status } = await Location.requestForegroundPermissionsAsync();
+                        if ( status !== 'granted' ){
+                                setErrorMsg('Permission to access location denied')
+                        }
+                        console.log('requestForegroundPermissionsAsync status: ', status);
+                        let location = await Location.getCurrentPositionAsync({});
         }
 
-
+        // functions for this component
 
         return (
                 <View style={styles.locationContainer}>
@@ -33,7 +39,7 @@ const Location = () => {
                                                 value={searchInput}
                                                 onChangeText={(value) => setSearchInput(value)}
                                                 // fires when submit button on keyboard is clicked
-                                                onSubmitEditing={() => handleSearch(searchInput)}
+                                                onSubmitEditing={() => { handleSearch(searchInput); setSearchInput(''); }}
                                         />
                                 </View>
                                 {/* location icon */}
@@ -41,15 +47,11 @@ const Location = () => {
                                         <MaterialIcons name="my-location" size={30} color="black" />
                                 </TouchableOpacity>
                         </View>
-
-                        <View style={styles.searchResultView}>
-                                <Text style={styles.searchResult}>{searchResult}</Text>
-                        </View>
                 </View>
         )
 }
 
-export default Location
+export default AddLocation;
 
 const styles = StyleSheet.create({
         locationContainer: {
@@ -61,41 +63,22 @@ const styles = StyleSheet.create({
                 justifyContent: 'space-around',
                 width: '100%',
                 marginTop: 10,
-                // temporary css
-                // borderWidth: 1,
-
         },
         search: {
                 flexDirection: 'row',
                 flex: 1,
                 padding: 10,
                 marginHorizontal: 5,
-                // temporary css
-                // borderWidth: 1,
         },
         searchInput: {
                 fontSize: 20,
                 flex: 1,
-
-                // temporary css
-                // borderWidth: 1,
         },
         currentLocation: {
                 padding: 10,
                 marginHorizontal: 10,
-                // temporary css
-                // borderWidth: 1,
         },
-        searchResultView: {
-                backgroundColor: 'green',
-                marginVertical: 15,
-
-        },
-        searchResult: {
-                fontSize: 20,
-                marginLeft: 45,
-                paddingVertical: 10,
-        }
 })
 
-
+                // temporary css
+                // borderWidth: 1,
