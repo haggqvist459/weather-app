@@ -24,7 +24,7 @@ const CitiesList = ({}) => {
         ]
 
         const renderItem = ({ item }) => {
-                console.log("item in renderList: ", item);
+                // console.log("item in renderList: ", item);
                 return (
                         <Item item={item} />
                 )

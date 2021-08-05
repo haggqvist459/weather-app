@@ -70,7 +70,7 @@ const Firebase = {
                         const user = await db.collection(DB_USER_COLLECTION_NAME).doc(uid).get()
 
                         if (user.exists) {
-                                console.log("@getUserInfo, results: ", user.data());
+                                // console.log("@getUserInfo, results: ", user.data());
                                 return user.data() 
                         } 
 
@@ -96,7 +96,7 @@ const Firebase = {
                 // let user;
                 firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((response) => {
-                        console.log("Firebase.signIn().then() response: ", response.user);
+                        // console.log("Firebase.signIn().then() response: ", response.user);
                         return response.user;
                 })
                 .catch((error) => {

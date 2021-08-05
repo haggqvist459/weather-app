@@ -39,7 +39,8 @@ NEXT TO DO:
 
 *** Home screen - UI & logic
         ** UI for the current location ( first list item )
-                * convert the location coordinates into a city name ( api call )
+                * add the current city & id to the city list 
+                * 
         ** Search/add city to list
                 * verify that the seach term exists in the api ( api call )
                 * convert city search term into a list item
@@ -139,5 +140,7 @@ COMPLETED:
                 * reauthenticate user
 *** Add weather API
         * Added API key & url prefix to client secrets folder
+** UI for the current location ( first list item )
+        * convert the location coordinates into a city name ( api call )
 */
 

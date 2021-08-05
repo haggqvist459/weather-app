@@ -3,7 +3,7 @@ import * as Location from 'expo-location'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 
-const AddLocation = ({ handleSearch }) => {
+const AddLocation = ({ handleSearch, getCurrentLocation }) => {
 
         // states for this component
         const [searchInput, setSearchInput] = useState('');
@@ -16,15 +16,18 @@ const AddLocation = ({ handleSearch }) => {
   
         }, []);
 
-        const handleCurrentLocation = async() => {
-                let { status } = await Location.requestForegroundPermissionsAsync();
-                        if ( status !== 'granted' ){
-                                setErrorMsg('Permission to access location denied')
-                        }
-                        console.log('requestForegroundPermissionsAsync status: ', status);
-                        let location = await Location.getCurrentPositionAsync({});
+        
+        const getLocation = async() => {
+                let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced })
+                console.log('getLocation @AddLocation.jsx - currentLocation: ', location);
+                getCurrentLocation(location);
+                // .then(() => {
+                //         console.log('getLocation @AddLocation.jsx - currentLocation: ', location);
+                // })
+                // .catch((error) => console.log("error at getLocation: ", error.message))
+                // .finally(() => getCurrentLocation(location));                
         }
-
+        
         // functions for this component
 
         return (
@@ -43,7 +46,7 @@ const AddLocation = ({ handleSearch }) => {
                                         />
                                 </View>
                                 {/* location icon */}
-                                <TouchableOpacity style={styles.currentLocation}>
+                                <TouchableOpacity onPress={() => getLocation()} style={styles.currentLocation}>
                                         <MaterialIcons name="my-location" size={30} color="black" />
                                 </TouchableOpacity>
                         </View>
