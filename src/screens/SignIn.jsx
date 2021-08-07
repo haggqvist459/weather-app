@@ -4,7 +4,7 @@ import { Alert, TouchableWithoutFeedback, Keyboard, Platform } from 'react-nativ
 import { UserContext } from '../contexts/UserContext';
 import { FirebaseContext } from '../contexts/FirebaseContext';
 import { Text, Input } from '../components/base';
-import HeaderGraphics from '../components/HeaderGraphics'
+import HeaderGraphics from '../components/header/HeaderGraphics'
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS } from '../styles/colors';
 import { ROUTES,  adjustSize} from '../utils/';
@@ -77,7 +77,6 @@ const SignIn = ({ navigation }) => {
                                                         <Text tiny semiBold left uppercase color={COLORS.GRAY}>Email Address:</Text>
                                                         <Input
                                                                 mediumLarge
-                                                                width={'100%'}
                                                                 autoCapitalize="none"
                                                                 autoCompleteType="email"
                                                                 autoCorrect={false}
@@ -136,10 +135,12 @@ const TitleContainer = styled.View`
 `;
 
 const Auth = styled.View`
+        /* flex: 1; */
         margin: 32px 32px 32px;
 `;
 
 const AuthContainer = styled.View`
+        /* flex: 1; */
         margin-bottom:  32px;
 `;
 
@@ -165,15 +166,17 @@ const SignInButton = styled.TouchableOpacity`
         border-radius: 10px;
 `;
 
+const SignUpLink = styled.TouchableOpacity`
+        margin-top: 8px;
+        padding: 5px;
+`;
+
 const Loading = styled.ActivityIndicator.attrs((props) => ({
         color: COLORS.WHITE_COFFEE,
         size: 'small',
 }))``;
 
-const SignUpLink = styled.TouchableOpacity`
-        margin-top: 8px;
-        padding: 5px;
-`;
+
 
 
 

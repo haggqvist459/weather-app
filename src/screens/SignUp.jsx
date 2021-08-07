@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import { KeyboardAvoidingView, Platform } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import { FirebaseContext } from '../contexts/FirebaseContext'
 import { UserContext } from '../contexts/UserContext'
 import { Text, Input } from '../components/base'
-import HeaderGraphics from '../components/HeaderGraphics'
+import HeaderGraphics from '../components/header/HeaderGraphics'
 import { COLORS } from '../styles/colors'
 import { adjustSize, ROUTES } from '../utils'
 
@@ -13,6 +14,7 @@ const SignUp = ({ navigation }) => {
 
         // component states
         const [email, setEmail] = useState('');
+        const [text, setText] = useState('');
         const [username, setUsername] = useState('');
         const [password, setPassword] = useState('');
         const [passwordHidden, setPasswordHidden] = useState(true);
@@ -54,16 +56,14 @@ const SignUp = ({ navigation }) => {
         }
 
         return (
-                <Container>
+                <Container >
                         <HeaderGraphics />
                         <Main>
-
                                 <TitleContainer>
                                         <Text large bold center>
                                                 Sign up to get started!
                                         </Text>
                                 </TitleContainer>
-
                                 <Auth>
                                         <AuthContainer>
                                                 <Text tiny semiBold left uppercase color={COLORS.GRAY}>Username</Text>
@@ -74,13 +74,14 @@ const SignUp = ({ navigation }) => {
                                                 />
                                         </AuthContainer>
                                         <AuthContainer>
-                                                <Text tiny semiBold left uppercase color={COLORS.GRAY}>email</Text>
+                                                <Text tiny semiBold left uppercase color={COLORS.GRAY}>Email</Text>
                                                 <Input
-                                                        autoCapitalize="none"
-                                                        autoCompleteType="email"
                                                         autoCorrect={false}
+                                                        autoCapitalize="none"
+                                                        autoCompleteType="off"
+                                                        textContentType="none"
                                                         keyboardType="email-address"
-                                                        onChangeText={(value) => setEmail(value)}
+                                                        onChangeText={(value) => setText(value)}
                                                 />
                                         </AuthContainer>
                                         <AuthContainer>
@@ -91,6 +92,7 @@ const SignUp = ({ navigation }) => {
                                                                 width={'90%'}
                                                                 autoCapitalize="none"
                                                                 autoCompleteType="password"
+                                                                textContentType="none"
                                                                 autoCorrect={false}
                                                                 secureTextEntry={passwordHidden}
                                                                 onChangeText={(value) => setPassword(value)}
@@ -126,6 +128,7 @@ const Container = styled.View`
         flex: 1;
         background-color: ${COLORS.WHITE_COFFEE};
 `;
+
 //play around with which view should be the scroll view
 const Main = styled.ScrollView`
         flex: 1;
@@ -133,13 +136,16 @@ const Main = styled.ScrollView`
 `;
 const TitleContainer = styled.View`
         margin-top: 130px;
+        z-index: -75;
 `;
 
 const Auth = styled.View`
-        margin: 26px 32px 26px;
+        /* flex: 1; */
+        margin: 22px 32px 22px;
 `;
 
 const AuthContainer = styled.View`
+        /* flex: 1; */
         margin-bottom:  32px;
 `;
 
@@ -164,11 +170,6 @@ const SignUpButton = styled.TouchableOpacity`
         border-radius: 10px;
 `;
 
-const Loading = styled.ActivityIndicator.attrs((props) => ({
-        color: COLORS.WHITE_COFFEE,
-        size: 'small',
-}))``;
-
 const SignInLink = styled.TouchableOpacity`
         margin-top: 8px;
         padding: 5px;
@@ -176,3 +177,12 @@ const SignInLink = styled.TouchableOpacity`
 
 
 
+
+/*
+                                <KeyboardAvoidingView
+                                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                                        style={appStyles.container}>
+
+                                </KeyboardAvoidingView>
+
+*/

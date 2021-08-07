@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import styled from 'styled-components'
-import { COLORS } from '../styles/colors';
+import { COLORS } from '../../styles/colors';
 
 
 const HeaderGraphics = () => {

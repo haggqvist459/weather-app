@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native'
-import HeaderButton from '../components/HeaderButton';
+import HeaderButton from '../components/header/HeaderButton';
 
 const WeatherDetails = ({ navigation }) => {
 

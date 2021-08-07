@@ -1,4 +1,3 @@
-// import { useFonts } from 'expo-font'
 import * as Font from 'expo-font'
 
 export const FONT_NAME = 'SourceSansPro';

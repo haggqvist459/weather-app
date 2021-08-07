@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
-import { ROUTES } from '../utils/constants'
+import { ROUTES } from '../../utils/constants'
 
 export default function HeaderButton({ navigation }) {
 

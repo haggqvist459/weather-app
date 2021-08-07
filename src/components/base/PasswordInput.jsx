@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles/colors'
 import adjustSize from '../../utils/fontSizeAdjuster'
 import { FONT_NAME } from '../../utils/loadFonts'
+import { MaterialIcons } from '@expo/vector-icons';
 
-const TextInput = ({ ...props }) => {
+const PasswordInput = ({ ...props }) => {
+
+        const [passwordHidden, setPasswordHidden] = useState(true);
+
         return (
-                <CustomInput {...props} />
+                <PasswordInputView>
+                        <CustomInput 
+                                {...props}
+                                secureTextEntry={passwordHidden}
+                                 />
+                        <PasswordIconToggle onPress={() => setPasswordHidden(!passwordHidden)}>
+                                <MaterialIcons name={`visibility${passwordHidden ? '-off' : ''}`} size={adjustSize(30)} color={COLORS.PRIMARY_BUTTON} />
+                        </PasswordIconToggle>
+                </PasswordInputView>
         )
 }
 
-export default TextInput
+export default PasswordInput
 
+const PasswordInputView = styled.View`
+
+`;
+
+const PasswordIconToggle = styled.TouchableOpacity`
+        position: absolute;
+        right: 0;
+        padding: 5px;
+        /* margin-bottom: 10px; */
+        /* padding-bottom: 5px; */
+`;
 
 const CustomInput = styled.TextInput`
 
@@ -20,9 +43,10 @@ const CustomInput = styled.TextInput`
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
         padding: ${props => props.padding ?? 0};
         margin: ${props => props.margin ?? 0};
-        height: ${props => props.height ?? '36px'};
+        /* height: ${props => props.height ?? '36px'}; */
         width: ${props => props.width ?? '100%'};
         margin-bottom: ${props => props.marginBottom ?? '0px'};
+        margin-top: ${props => props.marginBottom ?? '15px'};
 
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
@@ -33,7 +57,7 @@ const CustomInput = styled.TextInput`
                         case large:
                                 return `font-size: ${adjustSize(24)}px;`;
 
-                        case mediumLarge: 
+                        case mediumLarge:
                                 return `font-size: ${adjustSize(20)}px`;
 
                         case medium:
@@ -50,7 +74,7 @@ const CustomInput = styled.TextInput`
                 }
         }}
 
-        ${({ black, blackItalic, bold, boldItalic,  semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
+        ${({ black, blackItalic, bold, boldItalic, semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
                 switch (true) {
                         case black:
                                 return `font-family: ${FONT_NAME}-Black;`;
@@ -64,21 +88,21 @@ const CustomInput = styled.TextInput`
                         case boldItalic:
                                 return `font-family: ${FONT_NAME}-BoldItalic;`;
 
-                        case semiBold: 
+                        case semiBold:
                                 return `font-family: ${FONT_NAME}-SemiBold;`;
-                        
-                        case semiBoldItalic: 
+
+                        case semiBoldItalic:
                                 return `font-family: ${FONT_NAME}-SemiBoldItalic;`;
 
                         case light:
                                 return `font-family: ${FONT_NAME}-Light;`;
-                        
+
                         case lightItalic:
                                 return `font-family: ${FONT_NAME}-LightItalic;`;
 
                         case extraLight:
                                 return `font-family: ${FONT_NAME}-ExtraLight;`;
-                        
+
                         case extraLightItalic:
                                 return `font-family: ${FONT_NAME}-ExtraLightItalic;`;
 
@@ -125,4 +149,6 @@ height: 48px;
                 }
         }}
 
+                border-bottom-width: 0.5px; 
+        border-bottom-color: ${COLORS.PRIMARY_TEXT};
 */

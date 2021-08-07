@@ -4,7 +4,7 @@ import axios from 'axios';
 import API from '../utils/clientSecrets/openWeather';
 import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity } from 'react-native'
 import { UserContext } from '../contexts/UserContext'
-import HeaderButton from '../components/HeaderButton';
+import HeaderButton from '../components/header/HeaderButton';
 import { AddLocation, CitiesList } from '../components/home';
 
 

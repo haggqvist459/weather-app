@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { UserContext } from '../contexts/UserContext'
-import { FirebaseContext } from '../contexts/FirebaseContext'
+import { UserContext } from '../../contexts/UserContext'
+import { FirebaseContext } from '../../contexts/FirebaseContext'
 
 const LogoutButton = () => {
         const firebase = useContext(FirebaseContext);
