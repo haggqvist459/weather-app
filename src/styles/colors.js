@@ -12,6 +12,7 @@ export const COLORS = {
         CORNFLOWER_BLUE: '#2B85BE',
         WHITE_COFFEE: '#E1DFD8',
         CHARLESTON_GREEN: '#2A2728',
-        GRAY: '#999999'
+        GRAY: '#999999',
+        DARK_GRAY: '#707070'
 
 }

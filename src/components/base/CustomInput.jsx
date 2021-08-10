@@ -15,14 +15,25 @@ export default TextInput
 
 const CustomInput = styled.TextInput`
 
+        width: ${props => props.width ?? '100%'};
+        height: ${props => props.height ?? '36px'};
+
         border-bottom-width: ${props => props.borderBottomWidth ?? '0.5px'}; 
         border-bottom-color: ${props => props.color ?? COLORS.PRIMARY_TEXT};    
+
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
-        padding: ${props => props.padding ?? 0};
+
         margin: ${props => props.margin ?? 0};
-        height: ${props => props.height ?? '36px'};
-        width: ${props => props.width ?? '100%'};
-        margin-bottom: ${props => props.marginBottom ?? '0px'};
+        margin-top: ${props => props.marginTop ?? 0};
+        margin-bottom: ${props => props.marginBottom ?? 0};
+        margin-left: ${props => props.marginLeft ?? 0};
+        margin-right: ${props => props.marginRight ?? 0};
+
+        padding: ${props => props.padding ?? 0};
+        padding-top: ${props => props.paddingTop ?? 0};
+        padding-bottom: ${props => props.paddingBottom ?? 0};
+        padding-left: ${props => props.paddingLeft ?? 0};
+        padding-right: ${props => props.paddingRight ?? 0};
 
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
@@ -33,7 +44,7 @@ const CustomInput = styled.TextInput`
                         case large:
                                 return `font-size: ${adjustSize(24)}px;`;
 
-                        case mediumLarge: 
+                        case mediumLarge:
                                 return `font-size: ${adjustSize(20)}px`;
 
                         case medium:
@@ -50,7 +61,7 @@ const CustomInput = styled.TextInput`
                 }
         }}
 
-        ${({ black, blackItalic, bold, boldItalic,  semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
+        ${({ black, blackItalic, bold, boldItalic, semiBold, semiBoldItalic, light, lightItalic, extraLight, extraLightItalic, italic }) => {
                 switch (true) {
                         case black:
                                 return `font-family: ${FONT_NAME}-Black;`;
@@ -64,21 +75,21 @@ const CustomInput = styled.TextInput`
                         case boldItalic:
                                 return `font-family: ${FONT_NAME}-BoldItalic;`;
 
-                        case semiBold: 
+                        case semiBold:
                                 return `font-family: ${FONT_NAME}-SemiBold;`;
-                        
-                        case semiBoldItalic: 
+
+                        case semiBoldItalic:
                                 return `font-family: ${FONT_NAME}-SemiBoldItalic;`;
 
                         case light:
                                 return `font-family: ${FONT_NAME}-Light;`;
-                        
+
                         case lightItalic:
                                 return `font-family: ${FONT_NAME}-LightItalic;`;
 
                         case extraLight:
                                 return `font-family: ${FONT_NAME}-ExtraLight;`;
-                        
+
                         case extraLightItalic:
                                 return `font-family: ${FONT_NAME}-ExtraLightItalic;`;
 

@@ -10,14 +10,15 @@ const MainStackScreens = () => {
 
         //access the user in the user context to get the username 
         const [user] = useContext(UserContext)
-
+        // headerMode="none"
         return (
-                <MainStack.Navigator headerMode="none">
+                <MainStack.Navigator >
+                        <MainStack.Screen name={ROUTES.HOME} component={Home} />
                         <MainStack.Screen
                                 name={ROUTES.PROFILE}
                                 component={Profile}
                                 options={{ title: user.username }} />
-                        <MainStack.Screen name={ROUTES.HOME} component={Home} />
+                        
                         <MainStack.Screen name={ROUTES.WEATHER_DETAILS} component={WeatherDetails} />
                 </MainStack.Navigator>
         )

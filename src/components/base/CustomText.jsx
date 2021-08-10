@@ -14,11 +14,21 @@ export default Text
 
 const CustomText = styled.Text`
         color: ${props => props.color ?? COLORS.PRIMARY_TEXT};
+        
         margin: ${props => props.margin ?? 0};
+        margin-top: ${props => props.marginTop ?? 0};
+        margin-bottom: ${props => props.marginBottom ?? 0};
+        margin-left: ${props => props.marginLeft ?? 0};
+        margin-right: ${props => props.marginRight ?? 0};
+
         padding: ${props => props.padding ?? 0};
+        padding-top: ${props => props.paddingTop ?? 0};
+        padding-bottom: ${props => props.paddingBottom ?? 0};
+        padding-left: ${props => props.paddingLeft ?? 0};
+        padding-right: ${props => props.paddingRight ?? 0};
         /* // fix this! */
         text-decoration-color: ${props => props.color ?? COLORS.CARROT_ORANGE};
-        /* font-family: 'SourceSansPro-Regular'; */
+
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
                 switch (true) {

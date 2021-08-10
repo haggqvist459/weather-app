@@ -101,6 +101,9 @@ EXTRAS:
         * password & user name validation
         * update user info (email)
 
+** home screen - logic 
+        * move all search by coordinates into listHeader
+        
 
 * Header button opens menu instead of link to profile screen
 * Customize splash screen
@@ -142,5 +145,7 @@ COMPLETED:
         * Added API key & url prefix to client secrets folder
 ** UI for the current location ( first list item )
         * convert the location coordinates into a city name ( api call )
+** build the data source for the list 
+        * add new cities 
 */
 

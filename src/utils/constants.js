@@ -6,6 +6,6 @@ export const ROUTES = {
         WEATHER_DETAILS: 'WeatherDetails'
 }
 
-export const ASYNC_USER_UID = 'ASYNC_USER_UID';
+export const CITY_LIST_STORAGE = "CITY_LIST_STORAGE";
 
 export const DB_USER_COLLECTION_NAME = 'users';

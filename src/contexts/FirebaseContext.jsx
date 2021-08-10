@@ -19,7 +19,7 @@ const db = firebase.firestore();
 // create a custom JSON object with all the firebase functions
 const Firebase = {
         getCurrentUser: () => {
-                console.log('@Firebase.getCurrentUser: ', firebase.auth().currentUser);
+                // console.log('@Firebase.getCurrentUser: ', firebase.auth().currentUser);
                 return firebase.auth().currentUser
         },
         onAuthStateChanged: () => {

@@ -1,27 +1,28 @@
-import React, { useContext, useLayoutEffect, useState, useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useState, useEffect, useRef } from 'react'
+import { StyleSheet, View, StatusBar, FlatList, Alert } from 'react-native'
 import * as Location from 'expo-location'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from '../utils/clientSecrets/openWeather';
-import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity } from 'react-native'
-import { UserContext } from '../contexts/UserContext'
+import { CITY_LIST_STORAGE } from '../utils/constants';
 import HeaderButton from '../components/header/HeaderButton';
-import { AddLocation, CitiesList } from '../components/home';
+import { AddLocation } from '../components/home';
+import { Empty, Header, Item } from '../components/home/list';
 
 
 const Home = ({ navigation }) => {
 
-        const firstRender = useRef(true);
-        // contexts 
-        const [user] = useContext(UserContext);
+        // ref
+        const shouldRender = useRef(false);
 
         // states 
-        const [searchResult, setSearchResult] = useState();
-        const [currentPosition, setCurrentPosition] = useState({})
-        const [currentCity, setCurrentCity] = useState({});
-        const [showResults, setShowResults] = useState();
+        const [currentPosition, setCurrentPosition] = useState({ name: "loading current location", id: "-1" });
+        const [cityListSource, setCityListSource] = useState([]);
+        // TODO: add this msg to an alert
+        const [errorMsg, setErrorMsg] = useState();
 
         //temporary states
-        const [locationStatus, setLocationStatus] = useState(null);
+
 
         // hook calls 
         useLayoutEffect(() => {
@@ -31,82 +32,104 @@ const Home = ({ navigation }) => {
         }, [navigation])
 
         useEffect(() => {
-
-                (async () => {
-                        // check for permissions
-                        let { status } = await Location.requestForegroundPermissionsAsync();
-                        if (status !== 'granted') {
-                                setErrorMsg('Permission to access location denied')
-                        }
-                        console.log('requestForegroundPermissionsAsync status: ', status);
-                        // get the current location
-                        let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest });
-                        console.log('currentLocation: ', location);
-                        // destructure the location object into the stuff we need
-                        const { latitude, longitude } = location.coords;
-                        console.log('latitude: ', latitude);
-                        console.log('longitude: ', longitude);
-
-                        // if we got the coordinates we need, we can proceed to fetching the 
-                        if( latitude && longitude) {
-                                const URL = `${API.BASE_URL}lat=${latitude}&lon=${longitude}${API.UNIT}${API.KEY}`;
-                                axios.get(URL)
-                                .then((response) => {
-                                        console.log("response: ", response.data);
-                                        let name = response.data.name;
-                                        let id = response.data.id;
-                                        console.log("name: ", name);
-                                        console.log("id: ", id);
-                                        setCurrentCity({ name, id });
-                                })
-                                .catch((error) => {
-                                        console.log('error @axios.get(): ', error);
-                                })
-                                .finally(() => {
-                                        console.log('axios.get finally');
-                                        // make sure that the flat gets its first list item
-                                        // console.log("currentCity: ", currentCity);
-                                });
-                        }
-                       
-                        
-                        // setCurrentPosition(location);
-                        // console.log("currentPosition: ", currentPosition);
-                })();
+                loadFromStorage();
+                console.log("@useEffect start - cityListSource: ", cityListSource);
         }, [])
+
+        useEffect(() => {
+                console.log("shouldRender.current: ", shouldRender.current);
+                if (!shouldRender.current) {
+                        shouldRender.current = true;
+                        return;
+                }
+                console.log("useEffect [cityListSource] - about to save to storage");
+                saveToStorage();
+        }, [cityListSource]);
+
 
 
         //functions
+        const saveToStorage = async () => {
+                try {
+                        await AsyncStorage.setItem(CITY_LIST_STORAGE, JSON.stringify(cityListSource))
+                                .then(() => {
+                                        // log a success message after storing the todo list
+                                        console.log('data stored successfully');
+                                        console.log("stored data: ", JSON.stringify(cityListSource));
+                                })
+                } catch (error) {
+                        console.log(error);
+                }
+        }
+
+        const loadFromStorage = async () => {
+                try {
+                        await AsyncStorage.getItem(CITY_LIST_STORAGE)
+                                .then((stringifiedCityList) => {
+                                        // if todoList is not null, there's a string to parse
+                                        if (stringifiedCityList) {
+                                                console.log("stringifiedCityList: ", stringifiedCityList)
+                                                const parsedCityList = JSON.parse(stringifiedCityList)
+                                                setCityListSource(parsedCityList);
+                                        }
+                                });
+                } catch (error) {
+                        console.log("error @loadFromStorage() ", error);
+                }
+        }
+
         const handleSearch = (input) => {
                 console.log("handleSearch: ", input);
-
+                let searchResult;
                 // Verify somehow that the city exists in the API list before adding it to the flatlist. 
                 // Maybe make an API call and verify the response?
+                const URL = `${API.BASE_URL}q=${input}${API.UNIT}${API.KEY}`;
+                axios.get(URL)
+                        .then((response) => {
+                                // console.log("response: ", response.data);
+                                searchResult = { name: response.data.name, id: response.data.id.toString() };
+                                console.log("searchResult: ", searchResult);
+                                // here, add the current location to the array, next element id 
+                                setCityListSource([...cityListSource, searchResult]);
 
-                setSearchResult(input);
-                // also clear the search input?
+                        })
+                        .catch((error) => {
+                                console.log("@handleSearch axios.get().catch(): ", error);
+                                Alert.alert(
+                                        "Results not found",
+                                        error.message,
+                                        [{ text: "OK" }],
+                                );
+                        }).finally(() => {
+                                console.log("@handleSearch axios.get().finally() - searchResult: ", searchResult);
+                        });
         }
 
-        const getCurrentLocation = (location) => {
-                setCurrentPosition(location);
-                console.log("getCurrentLocation @Home.jsx - currentPosition: ", currentPosition);
+        const deleteItem = (id) => {
+                const updatedList = cityListSource.filter(item => item.id != id);
+                setCityListSource(updatedList);
         }
 
+        const renderItem = ({ item }) => {
+                // console.log("item in renderList: ", item);
+                return (
+                        <Item item={item} deleteItem={deleteItem} />
+                )
+        }
 
         return (
                 <View style={styles.centerAlign}>
                         <StatusBar barStyle="dark-content" />
-                        <AddLocation handleSearch={handleSearch} getCurrentLocation={getCurrentLocation} />
+                        <AddLocation handleSearch={handleSearch} />
                         {/* Search result */}
-                        {/* pass the data source for the flatlist from here */}
-                        {/* flatlist with cities saved by the user */}
-                        {/* first item in flat list is currentlocation  */}
-                        {/* <CitiesList  /> */}
-                        {/* possibly other components */}
-                        <Text>Location: </Text>
-                        <Text>{currentCity.name}</Text>
-                        {/* <Text>{currentPosition.coords.longitude}</Text> */}
-                        <CitiesList />
+                        <FlatList
+                                style={styles.list}
+                                data={cityListSource}
+                                renderItem={renderItem}
+                                keyExtractor={(item) => item.id}
+                                ListEmptyComponent={Empty}
+                                ListHeaderComponent={Header}
+                        />
                 </View>
         )
 }
@@ -120,28 +143,14 @@ const styles = StyleSheet.create({
                 // justifyContent: 'center',
                 marginTop: 10,
         },
-        tempButton: {
-                width: '80%',
-                height: 30,
-                backgroundColor: '#2B85BE'
+        list: {
+                minWidth: '100%'
         },
 })
 
 
-/**
-                        <TouchableOpacity style={styles.tempButton} onPress={tempFunction}>
-                                <Text>Text Test</Text>
-                        </TouchableOpacity>
+/*
 
 
 
-        const tempFunction = () => {
-                console.log("signin component user uid", user.uid);
-                navigation.navigate('TextTest')
-        }
-
-                                // let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced })
-                        // .then(() => {
-                        //         console.log('currentLocation: ', location);
-                        // });
  */

@@ -1,27 +1,19 @@
-import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, FlatList } from 'react-native'
 import { Empty, Header, Item } from './list'
 
-const CitiesList = ({}) => {
+// currently not in use
+// will bring back when the change in datasource loading is fixed
 
-        // temporary data source
-        // data source will current location on index slot 0 ( first) in the array
-        // the rest of the cities will be loaded from firebase OR local (async) storage
+const CitiesList = ({ dataSource }) => {
 
-        const data = [
-                {
-                        name: "current position",
-                        id: '0'
-                },
-                {
-                        name: "cairns",
-                        id: '1'
-                },
-                {
-                        name: "brisbane",
-                        id: '2'
-                }
-        ]
+        const [flatListSource, setFlatListSource] = useState()
+
+        useEffect(() => {
+                console.log("@CitiesList useEffect - dataSource: ", dataSource);
+                setFlatListSource(dataSource);
+        }, []);
+
 
         const renderItem = ({ item }) => {
                 // console.log("item in renderList: ", item);
@@ -33,7 +25,7 @@ const CitiesList = ({}) => {
         return (
                 <View>
                         <FlatList
-                                data={data}
+                                data={flatListSource}
                                 renderItem={renderItem}
                                 keyExtractor={(item) => item.id}
                                 ListEmptyComponent={Empty}
@@ -44,7 +36,3 @@ const CitiesList = ({}) => {
 }
 
 export default CitiesList
-
-const styles = StyleSheet.create({
-        
-})
