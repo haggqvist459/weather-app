@@ -3,11 +3,11 @@ import axios from 'axios';
 import API from '../utils/clientSecrets/openWeather';
 import styled from 'styled-components';
 import { Text } from '../components/base';
+import { COLORS } from '../styles/colors';
 import HeaderButton from '../components/header/HeaderButton';
+import { iconSelector } from '../utils';
+import WeatherIcon from '../components/weatherDetails/WeatherIcon';
 
-
-// https://api.openweathermap.org/data/2.5/onecall?id={city id}&appid={API key}
-//?id={city id}&appid={API key}
 
 const WeatherDetails = ({ navigation, route }) => {
 
@@ -17,7 +17,10 @@ const WeatherDetails = ({ navigation, route }) => {
 
         //states
         const [loading, setLoading] = useState(true);
+
         const [currentWeather, setCurrentWeather] = useState({});
+        const [currentWeatherIcon, setCurrentWeatherIcon] = useState();
+
         const [hourlyForecast, setHourlyforecast] = useState([{}]);
         const [dailyForecast, setDailyForecast] = useState([{}]);
 
@@ -45,43 +48,45 @@ const WeatherDetails = ({ navigation, route }) => {
                         .then((response) => {
                                 console.log("#######CURRENT#######");
                                 console.log("#######WEATHER#######");
-                                console.log("response.data", response.data.current);
-                                console.log('######################');
-                                console.log("#######DAILY#######");
-                                console.log("#######FORECAST#######");
-                                console.log("response.data", response.data.daily);
-                                console.log('######################');
+                                console.log("response.data.current", response.data.current);
+                                // console.log('######################');
+                                // console.log("#######DAILY#######");
+                                // console.log("#######FORECAST#######");
+                                // console.log("response.data.daily", response.data.daily);
+                                // console.log('######################');
+
+                                console.log("weather icon: ", response.data.current.weather[0].icon);
+
                                 // console.log("#######HOURLY#######");
                                 // console.log("#######FORECAST#######");
                                 // console.log("response.data", response.data.hourly);
                                 // console.log('######################');
-                                
+
                                 setCurrentWeather(response.data.current);
+                                setCurrentWeatherIcon(response.data.current.weather[0].icon);
                                 setDailyForecast(response.data.daily);
                                 setHourlyforecast(response.data.hourly);
-
                         })
                         .catch((error) => {
                                 console.log("error @ .get() current - : ", error);
                         })
         }, [])
 
-
         // functions 
 
 
 
-
-        const { temp, feels_like, sunrise, sunset } = currentWeather; 
         return (
                 <Container>
                         {/* CURRENT STUFF */}
                         <CurrentTemp>
-                                <Text title bold>{temp}º</Text>
-                                <Text small>Feels Like: <Text semiBold>{feels_like}º</Text></Text>
+                                <Text title bold>{currentWeather.temp}º</Text>
+                                <Text small>Feels Like: <Text semiBold>{currentWeather.feels_like}º</Text></Text>
+                                {/* should also hold the weather[0].description */}
+                                <WeatherIcon icon={currentWeatherIcon} />
+                                <Image source={iconSelector[currentWeatherIcon]}/>
                         </CurrentTemp>
 
-                        
                         {/* temperature + icon */}
                         {/* small text "feels like temp" */}
                         {/* overnight low temp + tomorrow max temp */}
@@ -91,7 +96,7 @@ const WeatherDetails = ({ navigation, route }) => {
                         {/* FORECAST STUFF  */}
                         {/* tomorrow */}
                         {/* 5-6 day forecast */}
-                        {/* lowest & higest temps & rain chance % */}
+                        {/* lowest & highest temps & rain chance % */}
 
                 </Container>
         )
@@ -101,8 +106,16 @@ export default WeatherDetails
 
 const Container = styled.View`
         flex: 1;
+        background-color: ${COLORS.WHITE_COFFEE};
 `;
 
 const CurrentTemp = styled.View`
 
 `;
+
+const Image = styled.Image`
+        width: 100px;
+        height: 100px;
+`;
+
+

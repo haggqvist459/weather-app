@@ -63,6 +63,7 @@ TODO :
 *** Home screen - UI & logic
         ** Search/add city to list
                 * add state & country to verify that we get the correct location
+                * maybe use the timezone to determine correct location
         ** Flatlist with cities, current location as first choice
                 * don't forget to separate the lists for each user 
 

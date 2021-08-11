@@ -79,7 +79,7 @@ const Home = ({ navigation }) => {
                 let searchResult;
                 // Verify somehow that the city exists in the API list before adding it to the flatlist. 
                 // Maybe make an API call and verify the response?
-                const URL = `${API.BASE_URL}q=${input},au${API.UNIT}${API.KEY}`;
+                const URL = `${API.BASE_URL}q=${input}${API.UNIT}${API.KEY}`;
                 axios.get(URL)
                         .then((response) => {
                                 // console.log("@handleSearch() - response: ", response.data);
