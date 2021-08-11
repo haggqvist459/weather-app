@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../../utils';
 import { MaterialIcons } from '@expo/vector-icons';
 import styled from 'styled-components'
 import { Text } from '../../base';
@@ -9,10 +11,12 @@ import axios from 'axios';
 const ListHeader = () => {
 
         // states
-        const [currentPosition, setCurrentPosition] = useState({ name: "loading...", id: "-1" });
+        const [currentPosition, setCurrentPosition] = useState({ name: "loading...", id: "-1", coord: {} });
         const [errorMsg, setErrorMsg] = useState();
 
-        // hooks 
+        // hooks
+        const navigation = useNavigation();
+
         useEffect(() => {
                 (async () => {
                         updateCurrentLocation();
@@ -40,8 +44,12 @@ const ListHeader = () => {
                 // console.log("URL: ", URL);
                 axios.get(URL)
                         .then((response) => {
-                                // console.log("response: ", response.data);
-                                currentLocation = { name: response.data.name, id: response.data.id.toString() }
+                                // console.log("@updateCurrentLocation() - response: ", response.data);
+                                currentLocation = {
+                                        name: response.data.name,
+                                        id: response.data.id.toString(),
+                                        coord: response.data.coord
+                                }
                                 console.log("@searchByCoordinates axios.get().then() - currentLocation: ", currentLocation);
                                 setCurrentPosition(currentLocation);
                         })
@@ -54,11 +62,21 @@ const ListHeader = () => {
                         });
         }
 
+        const navigationHandler = (item) => {
+                console.log('location ID: ', item);
+                navigation.navigate(ROUTES.WEATHER_DETAILS, { item });
+        }
+
         return (
                 <Container>
                         <CurrentLocation>
                                 <Text small semiBold>Current location: </Text>
-                                <Text title bold>{currentPosition.name}</Text>
+                                <WeatherLink 
+                                        // disable during error or loading
+                                        disabled={currentPosition.id === "-1" || currentPosition.id === '-2' ? true : false}
+                                        onPress={() => navigationHandler(currentPosition)}>
+                                        <Text title bold>{currentPosition.name}</Text>
+                                </WeatherLink>
                                 <Text small semiBold marginTop={'10px'}>Saved locations: </Text>
                         </CurrentLocation>
                         <UpdateLocation onPress={() => updateCurrentLocation()} >
@@ -79,6 +97,11 @@ const Container = styled.View`
 
 const CurrentLocation = styled.View`
         padding-left: 10px;
+        flex: 1;
+`;
+
+const WeatherLink = styled.TouchableOpacity`
+        
 `;
 
 const UpdateLocation = styled.TouchableOpacity`

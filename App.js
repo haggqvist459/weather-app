@@ -37,21 +37,15 @@ export default App;
 
 NEXT TO DO:
 
-*** Home screen - UI & logic
-        ** UI for the current location ( first list item )
-                * add the current city & id to the city list 
-                * 
-        ** Search/add city to list
-                * verify that the seach term exists in the api ( api call )
-                * convert city search term into a list item
-                * 
-        ** Flatlist with cities, current location as first choice
-                * just the city names & delete button next to it
-                * each item in list links to the weather details screen with the data for that city
-                * store the list with async storage // check the todo list project
-                * load the list from async storage // check the todo list project 
-                * don't forget to separate the lists for each user 
-
+*** Weather details - UI & logic
+        ** Top of component
+                * Temperature & icon
+        ** Icon
+                * Switch case based on ID
+        ** Current weather
+                * Some weather details from the API
+        ** Weather forecast
+                * Icons & temperature information
 
 IN PROGRESS:
 
@@ -61,41 +55,22 @@ IN PROGRESS:
         ** https://openweathermap.org/weather-conditions
                 * Switch case for the icons depending on the weather ID
 
-*** Home screen - UI & logic
-        ** Search/add city to list
-        ** UI for the current location
-        ** Flatlist with cities, current location as first choice
-                * just the city names & delete button next to it
-                * each item in list links to the weather details screen with the data for that city
-                *
+                
+
 
 TODO :
 
 *** Home screen - UI & logic
-        ** UI for the current location
         ** Search/add city to list
+                * add state & country to verify that we get the correct location
         ** Flatlist with cities, current location as first choice
-                * just the city names & delete button next to it
-                * each item in list links to the weather details screen with the data for that city
-
-*** Weather details - UI & logic
-        ** Top of component
-                * City name
-                * Temperature & icon
-        ** Icon
-                * Switch case based on ID
-        ** Current weather
-                * Some weather details from the API
-        ** Weather forecast
-                * Icons & temperature information
-
+                * don't forget to separate the lists for each user 
 
 
 EXTRAS:
-*** Splash screen - logic
-        * useEffect to check for user and proper redirect
+
 ** Sign up screen - logic
-        * password & email checks
+        * password & email valdation checks
 
 ** profile screen - logic
         * password & user name validation
@@ -104,15 +79,20 @@ EXTRAS:
 ** home screen - logic 
         * move all search by coordinates into listHeader
         
+** splash screen - UI
+        * loading animation
 
-* Header button opens menu instead of link to profile screen
-* Customize splash screen
-* Global styles
-* Fix Alert component for signUp & signIn (add it to firebase context?) - ???????
-* Profile image
+* styled-components
 
+
+
+* Fix Error Alert component for signUp & signIn (add it to firebase context?) - ???????
+
+*** Splash screen - logic
+        * useEffect to check for user and proper redirect
 
 COMPLETED:
+
 * 5 Basic Screens
 * Navigation setup
 * Basic Navigation around the screens
@@ -145,7 +125,18 @@ COMPLETED:
         * Added API key & url prefix to client secrets folder
 ** UI for the current location ( first list item )
         * convert the location coordinates into a city name ( api call )
-** build the data source for the list 
-        * add new cities 
+*** Home screen - UI & logic
+        ** Search/add city to list
+        ** Delete from the list
+        ** UI for the current location
+        ** Flatlist with cities, current location as first choice
+                * just the city names & delete button next to it
+                * each item in list links to the weather details screen with the data for that city
+                * store the list with async storage // check the todo list project
+                * load the list from async storage // check the todo list project
+
+*** Weather details - UI & logic
+        ** Top of component
+                * location name
 */
 

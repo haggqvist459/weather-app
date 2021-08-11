@@ -29,6 +29,14 @@ const CustomText = styled.Text`
         /* // fix this! */
         text-decoration-color: ${props => props.color ?? COLORS.CARROT_ORANGE};
 
+        ${({flex}) => {
+                switch(true) {
+                        case flex:
+                                return `flex: 1;`;
+                        default: 
+                                return
+                }
+        }}
 
         ${({ title, large, mediumLarge, medium, small, tiny }) => {
                 switch (true) {

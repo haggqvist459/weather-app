@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, StatusBar, FlatList, Alert } from 'react-native'
-import * as Location from 'expo-location'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from '../utils/clientSecrets/openWeather';
@@ -16,10 +15,7 @@ const Home = ({ navigation }) => {
         const shouldRender = useRef(false);
 
         // states 
-        const [currentPosition, setCurrentPosition] = useState({ name: "loading current location", id: "-1" });
         const [cityListSource, setCityListSource] = useState([]);
-        // TODO: add this msg to an alert
-        const [errorMsg, setErrorMsg] = useState();
 
         //temporary states
 
@@ -83,11 +79,15 @@ const Home = ({ navigation }) => {
                 let searchResult;
                 // Verify somehow that the city exists in the API list before adding it to the flatlist. 
                 // Maybe make an API call and verify the response?
-                const URL = `${API.BASE_URL}q=${input}${API.UNIT}${API.KEY}`;
+                const URL = `${API.BASE_URL}q=${input},au${API.UNIT}${API.KEY}`;
                 axios.get(URL)
                         .then((response) => {
-                                // console.log("response: ", response.data);
-                                searchResult = { name: response.data.name, id: response.data.id.toString() };
+                                // console.log("@handleSearch() - response: ", response.data);
+                                searchResult = { 
+                                        name: response.data.name, 
+                                        id: response.data.id.toString(), 
+                                        coord: response.data.coord 
+                                };
                                 console.log("searchResult: ", searchResult);
                                 // here, add the current location to the array, next element id 
                                 setCityListSource([...cityListSource, searchResult]);
