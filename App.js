@@ -36,26 +36,31 @@ export default App;
 /*
 
 NEXT TO DO:
+*** Weather details - UI
+        ** Finalize the styles
+                * Align temperatures, make sure they fit on a small screen
+                * 
 
-*** Weather details - UI & logic
-        ** Top of component
-                * Temperature & icon
-        ** Icon
-                * Switch case based on ID
-        ** Current weather
-                * Some weather details from the API
-        ** Weather forecast
-                * Icons & temperature information
+*** Splash 
+        ** rotating sun icon animation
+        ** blue background
+
+*** Sign In & Up
+        ** finalize UI styles
+                * make sure the sign up fits a small screen
+        ** Status Bar
+                * can not see status bar on iphone 
+        ** Validations, check Johannes' projects
+
+*** Home screen
+        ** no double entires in the list 
+
 
 IN PROGRESS:
 
 *** Weather API
         ** Current weather
-        ** 5 day / 3 hour forecast
-        ** https://openweathermap.org/weather-conditions
-                * Switch case for the icons depending on the weather ID
-
-                
+        ** 7 day / 48h forecast
 
 
 TODO :
@@ -71,7 +76,7 @@ TODO :
 EXTRAS:
 
 ** Sign up screen - logic
-        * password & email valdation checks
+        * password & email validation checks
 
 ** profile screen - logic
         * password & user name validation
@@ -79,9 +84,6 @@ EXTRAS:
 
 ** home screen - logic 
         * move all search by coordinates into listHeader
-        
-** splash screen - UI
-        * loading animation
 
 * styled-components
 
@@ -139,5 +141,11 @@ COMPLETED:
 *** Weather details - UI & logic
         ** Top of component
                 * location name
+        ** Top of component
+                * Temperature & icon
+        ** Icon
+                * Switch case based on ID
+        
+
 */
 

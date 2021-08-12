@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { Text } from '../components/base';
 import { COLORS } from '../styles/colors';
 import HeaderButton from '../components/header/HeaderButton';
-import { iconSelector } from '../utils';
 import WeatherIcon from '../components/weatherDetails/WeatherIcon';
 
 
@@ -19,14 +18,19 @@ const WeatherDetails = ({ navigation, route }) => {
         const [loading, setLoading] = useState(true);
 
         const [currentWeather, setCurrentWeather] = useState({});
-        const [currentWeatherIcon, setCurrentWeatherIcon] = useState();
+        const [currentWeatherDesc, setCurrentWeatherDesc] = useState({});
+
+        const [todaysWeather, setTodaysWeather] = useState({});
+        const [todaysTemp, setTodaysTemp] = useState({});
 
         const [hourlyForecast, setHourlyforecast] = useState([{}]);
-        const [dailyForecast, setDailyForecast] = useState([{}]);
+        const [weeklyForecast, setWeeklyForecast] = useState([{}]);
 
         // future states
         const [alerts, setAlerts] = useState();
         const [nextHourForecast, setNextHourForecast] = useState([{}]);
+
+        const [timezone, setTimezone] = useState()
 
 
         //hooks
@@ -52,19 +56,44 @@ const WeatherDetails = ({ navigation, route }) => {
                                 // console.log('######################');
                                 // console.log("#######DAILY#######");
                                 // console.log("#######FORECAST#######");
+                                // console.log("response.data.daily length: ", response.data.daily.length);
                                 // console.log("response.data.daily", response.data.daily);
                                 // console.log('######################');
+                                console.log('######################');
+                                console.log("#######TODAYS#######");
+                                console.log("#######FORECAST#######");
+                                console.log("response.data.daily[0]: ", response.data.daily[0]);
 
-                                console.log("weather icon: ", response.data.current.weather[0].icon);
+                                const [today] = [response.data.daily]
+
+                                // break the response down into objects and update the state values
+                                setCurrentWeather(response.data.current);
+
+                                const { description, icon, id, main } = response.data.current.weather[0];
+                                setCurrentWeatherDesc({
+                                        icon,
+                                        description,
+                                        id,
+                                        main
+                                });
+
+                                
+                                // first element of daily array is todays forecast, the next seven is the following week
+                                // setTodaysWeather();
+                                // console.log("Object.keys(response.data.daily[0]): ", Object.keys(response.data.daily[0]));
+                                // console.log("Object.values(response.data.daily[0]): ", Object.values(response.data.daily[0]));
+                                // setTodaysWeather(Object.values(response.data.daily[0]))
+
+
 
                                 // console.log("#######HOURLY#######");
                                 // console.log("#######FORECAST#######");
                                 // console.log("response.data", response.data.hourly);
                                 // console.log('######################');
 
-                                setCurrentWeather(response.data.current);
-                                setCurrentWeatherIcon(response.data.current.weather[0].icon);
-                                setDailyForecast(response.data.daily);
+
+
+
                                 setHourlyforecast(response.data.hourly);
                         })
                         .catch((error) => {
@@ -75,47 +104,150 @@ const WeatherDetails = ({ navigation, route }) => {
         // functions 
 
 
-
         return (
                 <Container>
-                        {/* CURRENT STUFF */}
-                        <CurrentTemp>
-                                <Text title bold>{currentWeather.temp}º</Text>
-                                <Text small>Feels Like: <Text semiBold>{currentWeather.feels_like}º</Text></Text>
-                                {/* should also hold the weather[0].description */}
-                                <WeatherIcon icon={currentWeatherIcon} />
-                                <Image source={iconSelector[currentWeatherIcon]}/>
-                        </CurrentTemp>
+                        <TemperatureContainer>
+                                <WeatherIcon currentWeather={currentWeatherDesc} />
+                                <CurrentTemperature>
+                                        <CurrentTemp bold>{round(currentWeather.temp)}º</CurrentTemp>
+                                        <Text >Feels Like: <Text semiBold>{round(currentWeather.feels_like)}º</Text></Text>
+                                </CurrentTemperature>
+                                <Alerts />
+                        </TemperatureContainer>
+                        <TodaysForecast>
+                                <Text large semiBold>Todays forecast: </Text>
 
-                        {/* temperature + icon */}
-                        {/* small text "feels like temp" */}
-                        {/* overnight low temp + tomorrow max temp */}
-                        {/* weather description, e.g "mostly clear" */}
-                        {/* chance of rain % */}
-                        {/* dropdown button that expands and shows all current weather data   -- extras */}
-                        {/* FORECAST STUFF  */}
-                        {/* tomorrow */}
-                        {/* 5-6 day forecast */}
-                        {/* lowest & highest temps & rain chance % */}
-
+                                <TempForecast>
+                                        <TempForecastRow>
+                                                <TempForecastHeader></TempForecastHeader>
+                                                <Text right small semiBold>morning: </Text>
+                                                <Text right small semiBold>day: </Text>
+                                                <Text right small semiBold>evening: </Text>
+                                                <Text right small semiBold>night: </Text>
+                                        </TempForecastRow>
+                                        {/* <TempForecastRow>
+                                                <TempForecastHeader tiny semiBold>Temperatures: </TempForecastHeader>
+                                                <Text right small semiBold> {todaysWeather.temp.morn}º</Text>
+                                                <Text right small semiBold>{todaysWeather.temp.day}º</Text>
+                                                <Text right small semiBold>{todaysWeather.temp.eve}º</Text>
+                                                <Text right small semiBold>{todaysWeather.temp.night}º</Text>
+                                        </TempForecastRow>
+                                        <TempForecastRow>
+                                                <TempForecastHeader tiny semiBold>Feels like: </TempForecastHeader>
+                                                <Text right small semiBold> {todaysWeather.feels_like.morn}º</Text>
+                                                <Text right small semiBold>{todaysWeather.feels_like.day}º</Text>
+                                                <Text right small semiBold>{todaysWeather.feels_like.eve}º</Text>
+                                                <Text right small semiBold>{todaysWeather.feels_like.night}º</Text>
+                                        </TempForecastRow> */}
+                                </TempForecast>
+                                {/* rain chance %, humidity & UVI index */}
+                                {/* overnight low temp + todays max temp */}
+                                {/* chance of rain % */}
+                                {/* UV-index */}
+                        </TodaysForecast>
+                        <HourlyForecast>
+                                {/* 48 hour forecast */}
+                                {/* might be a horizontal flatlist */}
+                                {/* holding temperature, % chance of rain & icon */}
+                        </HourlyForecast>
+                        <Dropdown>
+                                {/* dropdown button that expands and shows all current weather data   -- extras */}
+                        </Dropdown>
+                        <WeeklyForecast>
+                                {/* 7 day forecast */}
+                                {/* vertical flat list */}
+                                {/* lowest & highest temps, rain chance %, icon */}
+                        </WeeklyForecast>
                 </Container>
         )
 }
 
 export default WeatherDetails
 
+const round = (number) => {
+        return Math.round(number * 10) / 10;
+}
+
+const convertTime = (dt) => {
+        let timeStamp = new Date(dt * 1000);
+        return timeStamp.getHours() + ':' + (timeStamp.getMinutes()  < 10 ? '0' + timeStamp.getMinutes() : timeStamp.getMinutes());
+}
+
+const convertDate = (dt) => {
+        let dateTime = new Date(dt * 1000);
+        return dateTime.getDate() + '/' + (dateTime.getMonth()+1);
+}
+
+
 const Container = styled.View`
         flex: 1;
         background-color: ${COLORS.WHITE_COFFEE};
 `;
 
-const CurrentTemp = styled.View`
+const TemperatureContainer = styled.View`
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        /* padding: 10px; */
+`;
+
+const CurrentTemperature = styled.View`
+        flex-direction: column;
+        justify-content: center;
+`;
+
+const CurrentTemp = styled(Text)`
+        font-size: 36px;
+`;
+
+// not yet implemented
+const Alerts = styled.View`
+
+`;
+// 
+
+const TodaysForecast = styled.View`
 
 `;
 
-const Image = styled.Image`
-        width: 100px;
-        height: 100px;
+const TempForecast = styled.View`
+
 `;
+
+
+const TempForecastHeader = styled(Text)`
+        width: 30%;
+        background-color: azure;
+        
+`;
+
+const TempForecastRow = styled.View`
+        flex-direction: row;
+        justify-content: space-around;
+        /* border-bottom-width: 1px; */
+        background-color: beige;
+        padding: 10px;
+`;
+
+
+
+// forecasts for the hourly and weekly should be in a vertical scroll view 
+
+// horizontal flatlist
+const HourlyForecast = styled.View`
+
+`;
+
+// not yet implemented
+const Dropdown = styled.View`
+
+`;
+//
+
+// contain this one in a scrollview maybe?
+const WeeklyForecast = styled.View`
+
+`;
+
 
 

@@ -1,30 +1,38 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { Text } from '../base'
 
-const WeatherIcon = ({icon}) => {
+const WeatherIcon = ({currentWeather}) => {
 
-        console.log("icon: ", icon)
-        console.log('icons: ', icons[icon]);
+        const { icon, description, main, id} = currentWeather
+
+        useEffect(() => {
+                console.log("@WeatherIcon - currentWeather: ", currentWeather);
+                console.log("icon: ", icon);
+        },[])
+
         return (
-                <View>
+                <Container>
                         <Image 
-                                source={{uri: icons[icon]}}
-                                // style={{width: 50, height: 50, resizeMode: 'contain'}}
-                                style={styles.image}
+                                source={{uri: icons[icon]}}                        
                         />
-                </View>
+                </Container>
         )
 }
 
 export default WeatherIcon
 
-const styles = StyleSheet.create({
-        image: {
-                width: 100,
-                height: 100,
-                resizeMode: 'contain'
-        }
-})
+const Container = styled.View`
+
+        width: 100px;
+        height: 100px;
+`;
+
+const Image = styled.Image`
+        width: 100%;
+        height: 100%;
+`;
+
 
 const icons = {
         '01d': 'https://openweathermap.org/img/wn/01d@4x.png',
