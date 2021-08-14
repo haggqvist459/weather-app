@@ -19,51 +19,63 @@ const db = firebase.firestore();
 // create a custom JSON object with all the firebase functions
 const Firebase = {
         getCurrentUser: () => {
-                // console.log('@Firebase.getCurrentUser: ', firebase.auth().currentUser);
                 return firebase.auth().currentUser
         },
-        onAuthStateChanged: () => {
-                firebase.auth().onAuthStateChanged((user) =>{
-                        if (user){
-                                console.log('Firebase.onAuthStateChanged() UID: ', user.uid);
-                                return user.uid;
-                                } else {
-                                        return null;
-                                }
+        onAuthStateChanged: async () => {
+                return new Promise((resolve, reject) => {
+                        try {
+                                firebase.auth().onAuthStateChanged((user) => {
+                                        if (user) {
+                                                console.log('Firebase.onAuthStateChanged() UID: ', user.uid);
+                                                resolve(user)
+                                        } else {
+                                                console.log('user not found');
+                                                resolve(null);
+                                        }
+                                })
+                        } catch (error) {
+                                reject(error);
                         }
-                )
+                });
         },
         createUser: async (user) => {
-                try {
-                        // create a user in the authentication portion of firebase
-
+                // create a user in the authentication portion of firebase
+                return new Promise((resolve, reject) => {
                         firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-                                .then((response) => {
-                                        console.log("@Firebase.createUser response: ", response.user);
+                                .then(response => {
                                         db.collection(DB_USER_COLLECTION_NAME).doc(response.user.uid).set({
                                                 username: user.username,
-                                                email: user.email,
+                                                email: user.email
+                                        }).then(() => {
+                                                delete user.password;
+                                                resolve({ ...user, uid })
+                                        }).catch(error => {
+                                                reject(error)
                                         })
-                                                .then(
-                                                        console.log("Successfully created firestore document!")
-                                                )
-                                                .catch((error) => {
-                                                        console.log("Error writing to firestore: ", error.message);
+                                }).catch(error => {
+                                        reject(error);
+                                })
+                });
+        },
+        testing: async (user) => {
+                return new Promise((resolve, reject) => {
+                        try {
+                                firebase.auth().createUserWithEmailAndPassword(user.username, user.email)
+                                        .then((response) => {
+                                                db.collection(DB_USER_COLLECTION_NAME).doc(response.user.uid).set({
+                                                        username: user.username,
+                                                        email: user.email,
+                                                }).then(() => {
+                                                        delete user.password
+                                                        resolve({ ...user, uid });
+                                                }).catch((error) => {
+                                                        reject(error)
                                                 })
-                                })
-                                .catch((error) => {
-                                        console.log("Error @Firebase.createUser: ", error.message);
-                                })
-
-                        // we no longer need the password
-                        delete user.password
-                        // maybe return true or something that can be used to check whether everything went OK
-                        return { ...user }
-
-                } catch (error) {
-                        console.log('Error @createUser ', error.code);
-                        console.log('Error @createUser ', error.message);
-                }
+                                        })
+                        } catch (error) {
+                                reject(error)
+                        }
+                })
         },
         getUserInfo: async (uid) => {
                 try {
@@ -232,5 +244,27 @@ firebase.auth().createUserWithEmailAndPassword(email, password)
         })
     })
   }
+
+  firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+                        .then((response) => {
+                                console.log("@Firebase.createUser response: ", response.user);
+                                db.collection(DB_USER_COLLECTION_NAME).doc(response.user.uid).set({
+                                        username: user.username,
+                                        email: user.email,
+                                })
+                                        .then(
+                                                console.log("Successfully created firestore document!")
+                                        )
+                                        .catch((error) => {
+                                                console.log("Error writing to firestore: ", error.message);
+                                        })
+                        })
+                        .catch((error) => {
+                                console.log("Error @Firebase.createUser: ", error.message);
+                        })
+
+                // we no longer need the password
+                delete user.password
+                return { ...user }
 
 */

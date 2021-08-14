@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, Alert } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import { FirebaseContext } from '../contexts/FirebaseContext'
 import { UserContext } from '../contexts/UserContext'
@@ -14,7 +14,6 @@ const SignUp = ({ navigation }) => {
 
         // component states
         const [email, setEmail] = useState('');
-        const [text, setText] = useState('');
         const [username, setUsername] = useState('');
         const [password, setPassword] = useState('');
         const [passwordHidden, setPasswordHidden] = useState(true);
@@ -24,6 +23,7 @@ const SignUp = ({ navigation }) => {
         const firebase = useContext(FirebaseContext);
         const [_, setUser] = useContext(UserContext);
 
+        // hooks
         useEffect(() => {
                 console.log("SignUp useEffect Start")
 
@@ -32,27 +32,65 @@ const SignUp = ({ navigation }) => {
                 }
         }, []);
 
+        //functions
         const handleSignUp = async () => {
                 setLoading(true);
-                const user = {
-                        username,
-                        email,
-                        password
-                }
-
-                try {
-                        const createdUser = await firebase.createUser(user);
-
-                        if (createdUser) {
-                                setUser({ ...createdUser, isLoggedIn: true });
+                if (validateInputs(username, email, password)) {
+                        const user = {
+                                username,
+                                email,
+                                password
                         }
+                        try {
+                                const createdUser = await firebase.createUser(user);
 
-                } catch (error) {
-                        console.log("Error @handleSignUp: ", error.message)
-                } finally {
+                                if (createdUser) {
+                                        setUser({ ...createdUser, isLoggedIn: true });
+                                }
+
+                        } catch (error) {
+                                console.log("Error @handleSignUp: ", error);
+                                createAlert(error.code, error.message);
+                        } finally {
+                                setLoading(false);
+                        }
+                } else {
                         setLoading(false);
                 }
+        }
 
+        const validateInputs = (username, email, password) => {
+                //here we need to check if either email, password or username are empty 
+                // and if so interrupt the register process
+                if (username.length >= 2) {
+                        // username okay, check the email
+                        if (email.indexOf('@') > 0) {
+                                // username and email okay, check the password
+                                if (password.length >= 7) {
+                                        // username, email and password are all okay
+                                        return true;
+                                } else {
+                                        createAlert('Bad password!', 'Password incorrectly formatted, might be too short');
+                                        return false;
+                                }
+                        } else {
+                                // alert the user of an incorrectly formatted email
+                                createAlert('Bad email!', 'Email format incorrect, check it again.');
+                                return false;
+                        }
+                } else {
+                        // alert the user of an incorrect username
+                        createAlert('Bad username!', 'Username is too short!');
+                        return false;
+                }
+        }
+
+        const createAlert = (title, feedback) => {
+                Alert.alert(
+                        title,
+                        feedback,
+                        [{ text: "OK" }]
+                )
         }
 
         return (
@@ -81,7 +119,7 @@ const SignUp = ({ navigation }) => {
                                                         autoCompleteType="off"
                                                         textContentType="none"
                                                         keyboardType="email-address"
-                                                        onChangeText={(value) => setText(value)}
+                                                        onChangeText={(value) => setEmail(value)}
                                                 />
                                         </AuthContainer>
                                         <AuthContainer>
@@ -130,7 +168,7 @@ const Container = styled.View`
 `;
 
 //play around with which view should be the scroll view
-const Main = styled.ScrollView`
+const Main = styled.View`
         flex: 1;
         margin-bottom: 30px;
 `;
@@ -176,13 +214,7 @@ const SignInLink = styled.TouchableOpacity`
 `;
 
 
-
-
-/*
-                                <KeyboardAvoidingView
-                                        behavior={Platform.OS === "ios" ? "padding" : "height"}
-                                        style={appStyles.container}>
-
-                                </KeyboardAvoidingView>
-
-*/
+const Loading = styled.ActivityIndicator.attrs((props) => ({
+        color: COLORS.WHITE_COFFEE,
+        size: 'small',
+}))``;

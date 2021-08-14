@@ -23,7 +23,7 @@ const LogoutButton = () => {
 
         return (
                 <TouchableOpacity style={styles.headerButton} onPress={handleHeaderPress}>
-                        <Text>Sign Out</Text>
+                        <Text style={{fontWeight: 'bold'}}>Sign Out</Text>
                 </TouchableOpacity>
         )
 }

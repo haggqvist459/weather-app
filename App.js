@@ -41,19 +41,19 @@ NEXT TO DO:
                 * Align temperatures, make sure they fit on a small screen
                 * 
 
-*** Splash 
-        ** rotating sun icon animation
-        ** blue background
-
 *** Sign In & Up
-        ** finalize UI styles
-                * make sure the sign up fits a small screen
-        ** Status Bar
-                * can not see status bar on iphone 
-        ** Validations, check Johannes' projects
+        ** Validations
+                * email validation third party package
+        ** alerts
+                * incorrect parameters entered on sign in screen
 
+*** Profile 
+        ** Copy over the validations for username from sign up
+        
 *** Home screen
         ** no double entires in the list 
+        ** don't forget to separate the lists for each user in asyncstorage
+
 
 
 IN PROGRESS:
@@ -70,7 +70,7 @@ TODO :
                 * add state & country to verify that we get the correct location
                 * maybe use the timezone to determine correct location
         ** Flatlist with cities, current location as first choice
-                * don't forget to separate the lists for each user 
+                
 
 
 EXTRAS:
@@ -145,7 +145,13 @@ COMPLETED:
                 * Temperature & icon
         ** Icon
                 * Switch case based on ID
-        
-
+*** Splash 
+        ** rotating sun icon animation
+        ** blue background
+*** Sign In & Up
+        ** finalize UI styles
+                * make sure the sign up fits a small screen
+        ** Status Bar
+                * can not see status bar on iphone 
 */
 

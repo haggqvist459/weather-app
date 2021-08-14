@@ -28,7 +28,7 @@ const Home = ({ navigation }) => {
         }, [navigation])
 
         useEffect(() => {
-                loadFromStorage();
+                // loadFromStorage();
                 console.log("@useEffect start - cityListSource: ", cityListSource);
         }, [])
 
@@ -39,7 +39,7 @@ const Home = ({ navigation }) => {
                         return;
                 }
                 console.log("useEffect [cityListSource] - about to save to storage");
-                saveToStorage();
+                // saveToStorage();
         }, [cityListSource]);
 
 

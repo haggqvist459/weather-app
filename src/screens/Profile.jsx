@@ -86,7 +86,7 @@ const Profile = ({ navigation }) => {
                         </UpdateUsername>
                         <UpdatePassword>
                                 <InputContainer>
-                                        <Text tiny semiBold uppercase left color={COLORS.GRAY}>update password</Text>
+                                        <Text tiny semiBold uppercase left color={COLORS.GRAY}>new password</Text>
                                         <PasswordInput
                                                 mediumLarge
                                                 value={newPassword}
@@ -94,7 +94,7 @@ const Profile = ({ navigation }) => {
                                         />
                                 </InputContainer>
                                 <InputContainer>
-                                        <Text tiny semiBold uppercase left color={COLORS.GRAY}>update password</Text>
+                                        <Text tiny semiBold uppercase left color={COLORS.GRAY}>current password</Text>
                                         <PasswordInput
                                                 mediumLarge
                                                 value={currentPassword}

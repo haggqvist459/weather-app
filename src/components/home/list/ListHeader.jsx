@@ -19,7 +19,7 @@ const ListHeader = () => {
 
         useEffect(() => {
                 (async () => {
-                        updateCurrentLocation();
+                        // updateCurrentLocation();
                 })()
         }, [])
 
