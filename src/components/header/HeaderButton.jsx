@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity, StatusBar, Platform } from 'react-native'
+import { StyleSheet, TouchableOpacity, StatusBar, Platform } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import { ROUTES } from '../../utils/constants'
 

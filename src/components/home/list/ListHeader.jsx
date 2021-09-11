@@ -19,7 +19,7 @@ const ListHeader = () => {
 
         useEffect(() => {
                 (async () => {
-                        // updateCurrentLocation();
+                        updateCurrentLocation();
                 })()
         }, [])
 
@@ -72,7 +72,6 @@ const ListHeader = () => {
                         <CurrentLocation>
                                 <Text small semiBold>Current location: </Text>
                                 <WeatherLink 
-                                        // disable during error or loading
                                         disabled={currentPosition.id === "-1" || currentPosition.id === '-2' ? true : false}
                                         onPress={() => navigationHandler(currentPosition)}>
                                         <Text title bold>{currentPosition.name}</Text>

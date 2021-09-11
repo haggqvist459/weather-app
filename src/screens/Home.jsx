@@ -28,18 +28,16 @@ const Home = ({ navigation }) => {
         }, [navigation])
 
         useEffect(() => {
-                // loadFromStorage();
-                console.log("@useEffect start - cityListSource: ", cityListSource);
+                loadFromStorage();
+                console.log("@useEffect - cityListSource: ", cityListSource);
         }, [])
 
         useEffect(() => {
-                console.log("shouldRender.current: ", shouldRender.current);
                 if (!shouldRender.current) {
                         shouldRender.current = true;
                         return;
                 }
-                console.log("useEffect [cityListSource] - about to save to storage");
-                // saveToStorage();
+                saveToStorage();
         }, [cityListSource]);
 
 
@@ -51,7 +49,7 @@ const Home = ({ navigation }) => {
                                 .then(() => {
                                         // log a success message after storing the todo list
                                         console.log('data stored successfully');
-                                        console.log("stored data: ", JSON.stringify(cityListSource));
+                                        // console.log("stored data: ", JSON.stringify(cityListSource));
                                 })
                 } catch (error) {
                         console.log(error);
@@ -64,7 +62,7 @@ const Home = ({ navigation }) => {
                                 .then((stringifiedCityList) => {
                                         // if todoList is not null, there's a string to parse
                                         if (stringifiedCityList) {
-                                                console.log("stringifiedCityList: ", stringifiedCityList)
+                                                // console.log("stringifiedCityList: ", stringifiedCityList)
                                                 const parsedCityList = JSON.parse(stringifiedCityList)
                                                 setCityListSource(parsedCityList);
                                         }
@@ -88,10 +86,19 @@ const Home = ({ navigation }) => {
                                         id: response.data.id.toString(), 
                                         coord: response.data.coord 
                                 };
-                                console.log("searchResult: ", searchResult);
+                                // console.log("searchResult: ", searchResult);
                                 // here, add the current location to the array, next element id 
-                                setCityListSource([...cityListSource, searchResult]);
-
+                                if(!validateSearch(searchResult.id)){
+                                        setCityListSource([...cityListSource, searchResult]);
+                                } else {
+                                        // display some error that the entry was in the list already
+                                        console.log("Error adding to the list, search result already in the list.");
+                                        Alert.alert(
+                                                "Results found in list",
+                                                "The location you searched for is already in your list of saved locations.",
+                                                [{ text: "OK" }],
+                                        );
+                                }      
                         })
                         .catch((error) => {
                                 console.log("@handleSearch axios.get().catch(): ", error);
@@ -101,8 +108,19 @@ const Home = ({ navigation }) => {
                                         [{ text: "OK" }],
                                 );
                         }).finally(() => {
-                                console.log("@handleSearch axios.get().finally() - searchResult: ", searchResult);
+                                // console.log("@handleSearch axios.get().finally() - searchResult: ", searchResult);
                         });
+        }
+
+
+        const validateSearch = (id) => {
+                let matchFound = false;
+                cityListSource.forEach(item => {
+                        if (item.id === id){
+                                matchFound = true;
+                        }
+                })
+                return matchFound;
         }
 
         const deleteItem = (id) => {

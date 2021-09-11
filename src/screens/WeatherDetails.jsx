@@ -77,7 +77,7 @@ const WeatherDetails = ({ navigation, route }) => {
                                         main
                                 });
 
-                                
+
                                 // first element of daily array is todays forecast, the next seven is the following week
                                 // setTodaysWeather();
                                 // console.log("Object.keys(response.data.daily[0]): ", Object.keys(response.data.daily[0]));
@@ -165,17 +165,20 @@ const WeatherDetails = ({ navigation, route }) => {
 export default WeatherDetails
 
 const round = (number) => {
+        if (!number) {
+                return 0;
+        }
         return Math.round(number * 10) / 10;
 }
 
 const convertTime = (dt) => {
         let timeStamp = new Date(dt * 1000);
-        return timeStamp.getHours() + ':' + (timeStamp.getMinutes()  < 10 ? '0' + timeStamp.getMinutes() : timeStamp.getMinutes());
+        return timeStamp.getHours() + ':' + (timeStamp.getMinutes() < 10 ? '0' + timeStamp.getMinutes() : timeStamp.getMinutes());
 }
 
 const convertDate = (dt) => {
         let dateTime = new Date(dt * 1000);
-        return dateTime.getDate() + '/' + (dateTime.getMonth()+1);
+        return dateTime.getDate() + '/' + (dateTime.getMonth() + 1);
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ROUTES } from '../../../utils';
 import styled from 'styled-components';
@@ -38,11 +38,7 @@ const Container = styled.TouchableOpacity`
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        /* padding: 10px; */
         margin: 10px;
-        /* margin-bottom: 10px;
-        margin-left: 10px;
-        margin-right: 10px; */
 `;
 
 const DeleteIcon = styled.TouchableOpacity`
